@@ -39,7 +39,7 @@ const SuggestComponentForm = () => {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8 transform hover:scale-105 transition duration-300">
+        <form id='contactForm' onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8 transform  transition duration-300">
             <h3 className="text-2xl font-semibold mb-6 text-green-600 flex items-center">
                 <FontAwesomeIcon icon={faCube} className="mr-3" />Suggest a Component
             </h3>

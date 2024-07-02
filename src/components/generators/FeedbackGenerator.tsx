@@ -99,7 +99,7 @@ const FeedbackCardGenerator = () => {
 `;
     };
 
-    const handleCopyCode = (code) => {
+    const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
     };
