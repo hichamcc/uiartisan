@@ -13,7 +13,7 @@ const SuggestComponentForm = () => {
     const [componentDescription, setComponentDescription] = useState('');
     const [status, setStatus] = useState('');
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: any) => {
         e.preventDefault();
 
         try {
@@ -69,7 +69,7 @@ const SuggestComponentForm = () => {
                     <textarea
                         id="component-description"
                         name="component-description"
-                        rows="4"
+                        rows={4}
                         value={componentDescription}
                         onChange={(e) => setComponentDescription(e.target.value)}
                         className="w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
