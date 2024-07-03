@@ -1,6 +1,7 @@
 // data/components.ts
 
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { faLine } from '@fortawesome/free-brands-svg-icons';
 import { faLaughSquint, faMousePointer, faGhost, faKeyboard, faPaperPlane /* other funny icons */ } from '@fortawesome/free-solid-svg-icons';
 
 import {
@@ -31,7 +32,9 @@ import {
     faShareNodes,
     faBell,
     faTable,
-    faChartBar
+    faChartBar,
+    faTags,
+    faChess,
 } from '@fortawesome/free-solid-svg-icons';
 
 interface Component {
@@ -75,6 +78,12 @@ export const components: Component[] = [
         icon: faChartBar,
         link: '/generators/stats'
     },
+    {
+        name: 'Tag Input',
+        description: 'Create a customizable tag input field with add/remove functionality',
+        icon: faTags,
+        link: '/generators/tag-input'
+    },
 ];
 
 export const funnyComponents: Component[] = [
@@ -99,4 +108,21 @@ export const funnyComponents: Component[] = [
         link: '/funny/overenthusiastic-submit'
     },
     // ... other funny components
+];
+
+export const gameComponents = [
+
+    {
+        name: "Snake Game",
+        description: "Classic snake game. Eat food, grow longer, and don't hit the walls!",
+        icon: faSquare,
+        link: "/games/snake"
+    },
+    {
+        name: "Typing Speed Test",
+        description: "Test your typing speed with random sentences",
+        icon: faKeyboard,
+        link: "/games/typing-speed"
+    },
+    // Add more game components here
 ];

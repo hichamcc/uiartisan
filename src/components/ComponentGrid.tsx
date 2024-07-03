@@ -2,14 +2,27 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLaughBeam } from '@fortawesome/free-solid-svg-icons';
-import { components, funnyComponents } from '../data/Components';
+import { faSearch, faLaughBeam, faCode, faGamepad } from '@fortawesome/free-solid-svg-icons';
+import { components, funnyComponents, gameComponents } from '../data/Components';
+
+type ComponentType = 'ui' | 'funny' | 'game';
 
 const ComponentGrid: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
-    const [showFunny, setShowFunny] = useState(false);
+    const [componentType, setComponentType] = useState<ComponentType>('ui');
 
-    const currentComponents = showFunny ? funnyComponents : components;
+    const getComponents = () => {
+        switch (componentType) {
+            case 'funny':
+                return funnyComponents;
+            case 'game':
+                return gameComponents;
+            default:
+                return components;
+        }
+    };
+
+    const currentComponents = getComponents();
 
     const filteredComponents = currentComponents.filter(component =>
         component.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -18,17 +31,37 @@ const ComponentGrid: React.FC = () => {
 
     return (
         <div className="max-w-7xl mx-auto py-12 px-4">
-            <div className="flex justify-between items-center mb-8">
-                <h2 id="components" className="text-xl md:text-3xl font-bold text-center">
-                    {showFunny ? 'Funny Components' : 'UI Components'}
+            <div className="flex justify-between items-center mb-8 flex-wrap">
+                <h2 id="components" className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-0">
+                    {componentType === 'ui' ? 'UI Components' :
+                        componentType === 'funny' ? 'Funny Components' : 'Game Components'}
                 </h2>
-                <button
-                    onClick={() => setShowFunny(!showFunny)}
-                    className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 flex items-center"
-                >
-                    <FontAwesomeIcon icon={faLaughBeam} className="mr-2" />
-                    {showFunny ? 'Switch to UI' : 'Switch to Funny'}
-                </button>
+                <div className="flex space-x-2">
+                    <button
+                        onClick={() => setComponentType('ui')}
+                        className={`px-4 py-2 rounded-md transition duration-300 flex items-center ${componentType === 'ui' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                    >
+                        <FontAwesomeIcon icon={faCode} className="mr-2" />
+                        UI
+                    </button>
+                    <button
+                        onClick={() => setComponentType('funny')}
+                        className={`px-4 py-2 rounded-md transition duration-300 flex items-center ${componentType === 'funny' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                    >
+                        <FontAwesomeIcon icon={faLaughBeam} className="mr-2" />
+                        Funny
+                    </button>
+                    <button
+                        onClick={() => setComponentType('game')}
+                        className={`px-4 py-2 rounded-md transition duration-300 flex items-center ${componentType === 'game' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                    >
+                        <FontAwesomeIcon icon={faGamepad} className="mr-2" />
+                        Games
+                    </button>
+                </div>
             </div>
 
             <div className="mb-8">
@@ -36,7 +69,7 @@ const ComponentGrid: React.FC = () => {
                     <input
                         type="text"
                         id="componentSearch"
-                        placeholder={`Search ${showFunny ? 'funny' : 'UI'} components...`}
+                        placeholder={`Search ${componentType} components...`}
                         className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                         value={searchTerm}
                         onChange={(e) => setSearchTerm(e.target.value)}
