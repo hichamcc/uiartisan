@@ -8,8 +8,8 @@ export async function POST(request: NextRequest) {
         const { componentName, componentDescription } = await request.json();
 
         const response = await resend.emails.send({
-            from: 'UI ARTISAN <your-email@example.com>', // Your verified email address
-            to: 'recipient@example.com', // Recipient's email address
+            from: 'UI ARTISAN <rayden@resend.dev>',
+            to: 'gaddariowen@gmail.com',
             subject: 'New Component Suggestion',
             html: `<p><strong>Component Name:</strong> ${componentName}</p>
              <p><strong>Description:</strong></p>
