@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLaughBeam, faCode, faGamepad } from '@fortawesome/free-solid-svg-icons';
-import { components, funnyComponents, gameComponents } from '../data/Components';
+import { faSearch, faLaughBeam, faCode, faGamepad, faPaintBrush } from '@fortawesome/free-solid-svg-icons';
+import { components, funnyComponents, gameComponents, tailwindComponents } from '../data/Components';
 
-type ComponentType = 'ui' | 'funny' | 'game';
+type ComponentType = 'ui' | 'Tailwind' | 'funny' | 'game';
 
 const ComponentGrid: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -13,6 +13,8 @@ const ComponentGrid: React.FC = () => {
 
     const getComponents = () => {
         switch (componentType) {
+            case 'Tailwind':
+                return tailwindComponents;
             case 'funny':
                 return funnyComponents;
             case 'game':
@@ -34,9 +36,10 @@ const ComponentGrid: React.FC = () => {
             <div className="flex justify-between items-center mb-8 flex-wrap">
                 <h2 id="components" className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-0">
                     {componentType === 'ui' ? 'UI Components' :
-                        componentType === 'funny' ? 'Funny Components' : 'Game Components'}
+                        componentType === 'Tailwind' ? 'Tailwind Components' :
+                            componentType === 'funny' ? 'Funny Components' : 'Game Components'}
                 </h2>
-                <div className="flex space-x-2">
+                <div className="flex space-x-2 flex-wrap">
                     <button
                         onClick={() => setComponentType('ui')}
                         className={`px-4 py-2 rounded-md transition duration-300 flex items-center ${componentType === 'ui' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
@@ -44,6 +47,14 @@ const ComponentGrid: React.FC = () => {
                     >
                         <FontAwesomeIcon icon={faCode} className="mr-2" />
                         UI
+                    </button>
+                    <button
+                        onClick={() => setComponentType('Tailwind')}
+                        className={`hidden px-4 py-2 rounded-md transition duration-300 flex items-center ${componentType === 'Tailwind' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                    >
+                        <FontAwesomeIcon icon={faPaintBrush} className="mr-2" />
+                        Tailwind
                     </button>
                     <button
                         onClick={() => setComponentType('funny')}

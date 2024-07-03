@@ -2,7 +2,7 @@
 
 import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
 import { faLine } from '@fortawesome/free-brands-svg-icons';
-import { faLaughSquint, faMousePointer, faGhost, faKeyboard, faPaperPlane /* other funny icons */ } from '@fortawesome/free-solid-svg-icons';
+import { faLaughSquint, faMousePointer, faGhost, faKeyboard, faPaperPlane, faPen, faBullhorn, faNavicon,  /* other funny icons */ } from '@fortawesome/free-solid-svg-icons';
 
 import {
     faTableColumns,
@@ -34,6 +34,7 @@ import {
     faTable,
     faChartBar,
     faTags,
+
     faChess,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -125,4 +126,16 @@ export const gameComponents = [
         link: "/games/typing-speed"
     },
     // Add more game components here
+];
+
+export const tailwindComponents: Component[] = [
+    { name: 'Button', description: 'Customizable action button', icon: faSquare, link: '/tailwind/button' },
+    { name: 'Card', description: 'Versatile content container', icon: faSquare, link: '/tailwind/card' },
+    { name: 'Grid', description: 'Flexible grid system', icon: faTableColumns, link: '/tailwind/grid' },
+    { name: 'Form', description: 'Input and form components', icon: faPen, link: '/tailwind/form' },
+    { name: 'Alert', description: 'Contextual feedback messages', icon: faBullhorn, link: '/tailwind/alert' },
+    { name: 'Table', description: 'Responsive data table', icon: faTable, link: '/tailwind/table' },
+    { name: 'Modal', description: 'Customizable dialog boxes', icon: faSquare, link: '/tailwind/modal' },
+    { name: 'Navbar', description: 'Responsive navigation component', icon: faNavicon, link: '/tailwind/navbar' },
+    // Add more Tailwind components as needed
 ];
