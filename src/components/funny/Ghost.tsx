@@ -5,6 +5,22 @@ import { faCopy, faCheck, faGhost } from '@fortawesome/free-solid-svg-icons';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
+const useAudio = (url: string) => {
+    const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+
+    useEffect(() => {
+        setAudio(new Audio(url));
+    }, [url]);
+
+    const play = () => {
+        if (audio) {
+            audio.play().catch(error => console.error("Audio playback failed", error));
+        }
+    };
+
+    return { audio, play };
+};
+
 const FunnyGhostCursor: React.FC = () => {
     const [copiedHTML, setCopiedHTML] = useState(false);
     const [copiedCSS, setCopiedCSS] = useState(false);
@@ -12,7 +28,7 @@ const FunnyGhostCursor: React.FC = () => {
     const demoRef = useRef<HTMLDivElement>(null);
     const ghostRef = useRef<HTMLDivElement>(null);
     const [ghostMessage, setGhostMessage] = useState('');
-    const [audio] = useState(new Audio('/boo-sound.wav')); // Make sure to add this sound file to your public folder
+    const { audio, play } = useAudio('/boo-sound.wav');
 
     useEffect(() => {
         const demo = demoRef.current;
@@ -48,7 +64,7 @@ const FunnyGhostCursor: React.FC = () => {
 
             // Occasionally play a "boo" sound
             if (Math.random() < 0.005 && Date.now() - lastBooed > 3000) {
-                audio.play();
+                play;
                 lastBooed = Date.now();
             }
         };
@@ -59,7 +75,7 @@ const FunnyGhostCursor: React.FC = () => {
             demo.removeEventListener('mousemove', moveGhost);
             clearTimeout(timeout);
         };
-    }, [audio]);
+    });
 
     const htmlCode = `
 <div id="funny-ghost-cursor-demo">

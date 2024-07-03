@@ -13,7 +13,6 @@ const DramaticTypoCorrector: React.FC = () => {
     const [copiedCSS, setCopiedCSS] = useState(false);
     const [copiedJS, setCopiedJS] = useState(false);
     const inputRef = useRef<HTMLInputElement>(null);
-    const [audio] = useState(new Audio('/dramatic-sound.wav')); // Add this sound file to your public folder
 
     const dramaticResponses = [
         "Oh, the horror! A typo!",
@@ -33,7 +32,6 @@ const DramaticTypoCorrector: React.FC = () => {
         if (lastWord.length > 2 && !commonWords.includes(lastWord)) {
             setIsShaking(true);
             setMessage(dramaticResponses[Math.floor(Math.random() * dramaticResponses.length)]);
-            audio.play();
             setTimeout(() => setIsShaking(false), 500);
         } else {
             setMessage('');
@@ -56,7 +54,6 @@ const DramaticTypoCorrector: React.FC = () => {
     <input type="text" id="dramatic-input" placeholder="Type something...">
     <p id="dramatic-message"></p>
 </div>
-<audio id="dramatic-sound" src="path/to/dramatic-sound.mp3"></audio>
 `.trim();
 
     const cssCode = `
@@ -96,7 +93,6 @@ const DramaticTypoCorrector: React.FC = () => {
 document.addEventListener('DOMContentLoaded', () => {
     const input = document.getElementById('dramatic-input');
     const messageEl = document.getElementById('dramatic-message');
-    const audio = document.getElementById('dramatic-sound');
 
     const dramaticResponses = [
         "Oh, the horror! A typo!",
@@ -116,7 +112,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (lastWord.length > 2 && !commonWords.includes(lastWord)) {
             input.classList.add('shake');
             messageEl.textContent = dramaticResponses[Math.floor(Math.random() * dramaticResponses.length)];
-            audio.play();
             setTimeout(() => input.classList.remove('shake'), 500);
         } else {
             messageEl.textContent = '';
@@ -209,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     <li>Add the HTML to your page where you want the Dramatic Typo Corrector to appear.</li>
                     <li>Include the CSS in your stylesheet or within a &lt;style&gt; tag in your HTML.</li>
                     <li>Add the JavaScript to a &lt;script&gt; tag at the end of your &lt;body&gt; or in an external .js file.</li>
-                    <li>Make sure to add a 'dramatic-sound.mp3' file (or change the audio file path in the code).</li>
                     <li>This is a humorous component and should be used sparingly to avoid frustrating users.</li>
                     <li>The typo detection is very simplistic. For a real application, consider using a proper spell-checking library.</li>
                 </ul>

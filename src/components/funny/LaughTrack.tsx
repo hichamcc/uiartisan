@@ -1,27 +1,46 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLaughSquint, faCopy, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-const LaughTrackWithCode: React.FC = () => {
+const AudioHandler = () => {
+    const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
     const [isLaughing, setIsLaughing] = useState(false);
+
+    useEffect(() => {
+        // Create Audio object only on client-side
+        setAudio(new Audio('/laugh-track.wav'));
+    }, []);
+
+    useEffect(() => {
+        if (!audio) return;
+
+        const handleEnded = () => setIsLaughing(false);
+        audio.addEventListener('ended', handleEnded);
+
+        return () => {
+            audio.removeEventListener('ended', handleEnded);
+        };
+    }, [audio]);
+
+    const playLaugh = useCallback(() => {
+        if (audio) {
+            setIsLaughing(true);
+            audio.play().catch(error => console.error("Audio playback failed", error));
+        }
+    }, [audio]);
+
+    return { isLaughing, playLaugh };
+};
+
+const LaughTrackWithCode: React.FC = () => {
+    const { isLaughing, playLaugh } = AudioHandler();
     const [audio] = useState(new Audio('/laugh-track.wav')); // Ensure you have this audio file in your public folder
     const [copiedHTML, setCopiedHTML] = useState(false);
     const [copiedCSS, setCopiedCSS] = useState(false);
 
-    useEffect(() => {
-        audio.addEventListener('ended', () => setIsLaughing(false));
-        return () => {
-            audio.removeEventListener('ended', () => setIsLaughing(false));
-        };
-    }, [audio]);
-
-    const playLaugh = () => {
-        setIsLaughing(true);
-        audio.play();
-    };
 
     const htmlCode = `
 <div class="laugh-track-container">
@@ -120,6 +139,7 @@ const LaughTrackWithCode: React.FC = () => {
                         {isLaughing ? "HA HA HA!" : "Click for Laughs!"}
                     </button>
                 </div>
+
             </div>
 
             <div className="mb-8">
