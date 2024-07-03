@@ -142,8 +142,9 @@ const LayoutGenerator = () => {
                                 id="rowCount"
                                 min="1"
                                 value={rowCount}
-                                onChange={(e) => setRowCount(Math.max(1, parseInt(e.target.value)))}
+                                onChange={(e) => setRowCount(Math.max(1, parseInt(e.target.value) || rowCount))}
                                 className="border p-2 w-full"
+                                required
                             />
                         </div>
 
