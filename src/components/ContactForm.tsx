@@ -1,50 +1,50 @@
 "use client";
+"use client";
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faComment, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
-import { Resend } from 'resend';
-import { NextRequest, NextResponse } from 'next/server';
-
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
+import { faUser, faEnvelope, faComment, faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const ContactForm = () => {
-
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [message, setMessage] = useState('');
     const [status, setStatus] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true);
 
         try {
-            const response = await resend.emails.send({
-                from: 'UI ARTISAN <rayden@resend.dev>', // Your verified email address
-                to: 'gaddariowen@gmail.com', // Recipient's email address
-                subject: 'New Contact Form Submission',
-                html: `<p><strong>Name:</strong> ${name}</p>
-                       <p><strong>Email:</strong> ${email}</p>
-                       <p><strong>Message:</strong></p>
-                       <p>${message}</p>`,
+            const response = await fetch('/api/resend', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name, email, message }),
             });
 
-            console.log('Email sent:', response);
-            setStatus('Email sent successfully!');
+            const data = await response.json();
 
-            // Reset form fields after submission
-            setName('');
-            setEmail('');
-            setMessage('');
-
+            if (data.success) {
+                setStatus('Email sent successfully!');
+                // Reset form fields after submission
+                setName('');
+                setEmail('');
+                setMessage('');
+            } else {
+                setStatus('Failed to send email.');
+            }
         } catch (error) {
             console.error('Error sending email:', error);
             setStatus('Failed to send email.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
-
     return (
-        <form id='contactForm' onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8 transform  transition duration-300">
+        <form id='contactForm' onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8 transform transition duration-300">
             <h3 className="text-2xl font-semibold mb-6 text-blue-600 flex items-center">
                 <FontAwesomeIcon icon={faEnvelope} className="mr-3" />Contact Us
             </h3>
@@ -96,13 +96,17 @@ const ContactForm = () => {
             <button
                 type="submit"
                 className="w-full bg-blue-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center"
+                disabled={isLoading}
             >
-                <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
-                Send Message
+                {isLoading ? (
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+                ) : (
+                    <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
+                )}
+                {isLoading ? 'Sending...' : 'Send Message'}
             </button>
             {status && <p className="mt-4 text-sm font-semibold text-center text-blue-500">{status}</p>}
-
-        </form >
+        </form>
     );
 };
 

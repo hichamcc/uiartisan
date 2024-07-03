@@ -1,45 +1,47 @@
 "use client";
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCube, faAlignLeft, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
-import { Resend } from 'resend';
-
-// Initialize Resend with your API key
-const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
-
+import { faCube, faAlignLeft, faPlusCircle, faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const SuggestComponentForm = () => {
     const [componentName, setComponentName] = useState('');
     const [componentDescription, setComponentDescription] = useState('');
     const [status, setStatus] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async (e: any) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLoading(true);
 
         try {
-            const response = await resend.emails.send({
-                from: 'your-email@example.com', // Your verified email address
-                to: 'recipient@example.com', // Recipient's email address
-                subject: 'New Component Suggestion',
-                html: `<p><strong>Component Name:</strong> ${componentName}</p>
-                       <p><strong>Description:</strong></p>
-                       <p>${componentDescription}</p>`,
+            const response = await fetch('/api/suggest-component', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ componentName, componentDescription }),
             });
 
-            console.log('Email sent:', response);
-            setStatus('Suggestion sent successfully!');
+            const data = await response.json();
 
-            // Reset form fields after submission
-            setComponentName('');
-            setComponentDescription('');
+            if (data.success) {
+                setStatus('Suggestion sent successfully!');
+                // Reset form fields after submission
+                setComponentName('');
+                setComponentDescription('');
+            } else {
+                setStatus('Failed to send suggestion.');
+            }
         } catch (error) {
             console.error('Error sending suggestion:', error);
             setStatus('Failed to send suggestion.');
+        } finally {
+            setIsLoading(false);
         }
     };
 
     return (
-        <form id='contactForm' onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8 transform  transition duration-300">
+        <form id='contactForm' onSubmit={handleSubmit} className="bg-white rounded-lg shadow-lg p-8 transform transition duration-300">
             <h3 className="text-2xl font-semibold mb-6 text-green-600 flex items-center">
                 <FontAwesomeIcon icon={faCube} className="mr-3" />Suggest a Component
             </h3>
@@ -80,13 +82,17 @@ const SuggestComponentForm = () => {
             <button
                 type="submit"
                 className="w-full bg-green-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-green-700 transition duration-300 flex items-center justify-center"
+                disabled={isLoading}
             >
-                <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
-                Submit Suggestion
+                {isLoading ? (
+                    <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+                ) : (
+                    <FontAwesomeIcon icon={faPlusCircle} className="mr-2" />
+                )}
+                {isLoading ? 'Submitting...' : 'Submit Suggestion'}
             </button>
 
-            {status && <p className="mt-4 text-sm font-semibold text-center text-blue-500">{status}</p>}
-
+            {status && <p className="mt-4 text-sm font-semibold text-center text-green-500">{status}</p>}
         </form>
     );
 };
