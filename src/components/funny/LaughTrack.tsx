@@ -37,7 +37,6 @@ const AudioHandler = () => {
 
 const LaughTrackWithCode: React.FC = () => {
     const { isLaughing, playLaugh } = AudioHandler();
-    const [audio] = useState(new Audio('/laugh-track.wav')); // Ensure you have this audio file in your public folder
     const [copiedHTML, setCopiedHTML] = useState(false);
     const [copiedCSS, setCopiedCSS] = useState(false);
 
