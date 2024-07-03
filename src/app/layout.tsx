@@ -5,6 +5,7 @@ import { Suspense } from 'react'
 
 import "./globals.css";
 import Loading from './Loading'
+import { Analytics } from "@vercel/analytics/react"
 
 
 
@@ -78,6 +79,7 @@ new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 
       </Script>
       <body className={inter.className} suppressHydrationWarning>
+        <Analytics />
         <Suspense fallback={<Loading />}>
           {children}
         </Suspense>
