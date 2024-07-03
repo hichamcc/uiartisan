@@ -1,10 +1,10 @@
-import ImageSpotGenerator from '@/components/generators/SpotGenerator';
+import StatsGenerator from '@/components/generators/StatsGenerator';
 import Layout from '@/components/Layout';
 
 export default function LayoutGeneratorPage() {
     return (
         <Layout>
-            <ImageSpotGenerator />
+            <StatsGenerator />
         </Layout>
     );
 }

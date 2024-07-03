@@ -27,7 +27,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
         }
     };
 
-    const handleCopyCode = (code) => {
+    const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
     };
@@ -39,13 +39,13 @@ background-image: radial-gradient(circle, ${stopsString});`;
         }
     };
 
-    const removeColorStop = (index) => {
+    const removeColorStop = (index: any) => {
         if (colorStops.length > 2) {
             setColorStops(colorStops.filter((_, i) => i !== index));
         }
     };
 
-    const updateColorStop = (index, field, value) => {
+    const updateColorStop = (index: any, field: any, value: any) => {
         const newStops = [...colorStops];
         newStops[index] = { ...newStops[index], [field]: value };
         setColorStops(newStops);

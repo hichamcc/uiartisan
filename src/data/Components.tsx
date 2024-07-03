@@ -31,6 +31,7 @@ import {
     faShareNodes,
     faBell,
     faTable,
+    faChartBar
 } from '@fortawesome/free-solid-svg-icons';
 
 interface Component {
@@ -64,11 +65,16 @@ export const components: Component[] = [
     { name: "Card Flip Generator", description: "Create custom card flip animations for interactive content reveal.", link: "/generators/card-flip", icon: faRotate },
     { name: "Mouse Follow Generator", description: "Create custom mouse follow effects for interactive cursors.", link: "/generators/mouse-follow", icon: faComputerMouse },
     { name: "Tabs Generator", description: "Create custom tabs for organized content presentation.", link: "/generators/tabs", icon: faFolder },
-    { name: "Image Spot Generator", description: "Create custom Spots on images .", link: "/generators/spot", icon: faImage },
     { name: "Feedback Generator", description: "Create custom feedback forms or popups to gather user input.", link: "/generators/feedback", icon: faComment },
     { name: "Social Media Buttons Generator", description: "Create custom social media buttons for improved social sharing.", link: "/generators/social-buttons", icon: faShareNodes },
     { name: "Alert/Notification Generator", description: "Create custom alerts and notifications with various styles, colors, and animations.", link: "/generators/alert", icon: faBell },
     { name: "Table Generator", description: "Create customizable tables with options for rows, columns, headers, and styling.", link: "/generators/table", icon: faTable },
+    {
+        name: 'Stats Generator',
+        description: 'Create customizable statistics displays with live preview',
+        icon: faChartBar,
+        link: '/generators/stats'
+    },
 ];
 
 export const funnyComponents: Component[] = [

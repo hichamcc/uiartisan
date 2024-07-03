@@ -19,17 +19,29 @@ const ShadowDivGenerator = () => {
     const [hoverTransition, setHoverTransition] = useState(0.3);
     const [hoverScale, setHoverScale] = useState(1.05);
 
+    interface Shadow {
+        offsetX: number;
+        offsetY: number;
+        blur: number;
+        spread: number;
+        color: string;
+        inset: boolean;
+    }
+
     const addShadow = () => {
         setShadows([...shadows, { offsetX: 0, offsetY: 0, blur: 10, spread: 0, color: '#00000040', inset: false }]);
     };
 
-    const removeShadow = (index) => {
+    const removeShadow = (index: number) => {
         setShadows(shadows.filter((_, i) => i !== index));
     };
 
-    const updateShadow = (index, property, value) => {
+    const updateShadow = (index: number, property: keyof Shadow, value: Shadow[keyof Shadow]) => {
         const newShadows = [...shadows];
-        newShadows[index][property] = value;
+        newShadows[index] = {
+            ...newShadows[index],
+            [property]: value
+        };
         setShadows(newShadows);
     };
 
@@ -68,7 +80,7 @@ const ShadowDivGenerator = () => {
         return '<div class="shadow-div"></div>';
     };
 
-    const handleCopyCode = (code) => {
+    const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
     };

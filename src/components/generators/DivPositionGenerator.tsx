@@ -15,7 +15,7 @@ const DivPositionGenerator = () => {
     const [borderRadius, setBorderRadius] = useState(0);
     const [preset, setPreset] = useState('custom');
 
-    const presets = {
+    const presets: any = {
         custom: { top: 0, left: 0 },
         center: { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' },
         'top-left': { top: 0, left: 0 },
@@ -57,7 +57,7 @@ const DivPositionGenerator = () => {
         return css.trim();
     };
 
-    const handleCopyCode = (code) => {
+    const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
     };
