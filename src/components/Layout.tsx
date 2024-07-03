@@ -1,9 +1,9 @@
-// components/Layout.tsx
-import React from 'react';
+"use client";
+import React, { useState } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaintBrush, faBars } from '@fortawesome/free-solid-svg-icons';
+import { faTimes, faBars } from '@fortawesome/free-solid-svg-icons';
 import Footer from './Footer';
 
 interface LayoutProps {
@@ -11,6 +11,11 @@ interface LayoutProps {
 }
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const toggleMenu = () => {
+        setIsMenuOpen(!isMenuOpen);
+    };
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col">
             <Head>
@@ -32,11 +37,20 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                             <Link href="#contact" className="hover:text-blue-200 transition duration-300">Contact</Link>
                         </div>
                         <div className="md:hidden">
-                            <button className="text-white focus:outline-none">
-                                <FontAwesomeIcon icon={faBars} />
+                            <button className="text-white focus:outline-none" onClick={toggleMenu}>
+                                <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
                             </button>
                         </div>
                     </div>
+                    {isMenuOpen && (
+                        <div className="md:hidden">
+                            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                                <Link href="/" className="block hover:text-blue-200 transition duration-300 py-2">Home</Link>
+                                <Link href="#components" className="block hover:text-blue-200 transition duration-300 py-2">Components</Link>
+                                <Link href="#contact" className="block hover:text-blue-200 transition duration-300 py-2">Contact</Link>
+                            </div>
+                        </div>
+                    )}
                 </nav>
             </header>
 

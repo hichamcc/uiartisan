@@ -19,7 +19,7 @@ const ComponentGrid: React.FC = () => {
     return (
         <div className="max-w-7xl mx-auto py-12 px-4">
             <div className="flex justify-between items-center mb-8">
-                <h2 id="components" className="text-3xl font-bold text-center">
+                <h2 id="components" className="text-xl md:text-3xl font-bold text-center">
                     {showFunny ? 'Funny Components' : 'UI Components'}
                 </h2>
                 <button
