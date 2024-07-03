@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'UI Generator',
     description: 'Create stunning UI components with our easy-to-use generator.',
-    url: 'https://www.youruigenerator.com/',
+    url: 'https://uiartisan.vercel.app/',
     siteName: 'UI Generator',
     images: [
       {
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
   },
   icons: {
-    shortcut: '/img/favicon.ico',
-    icon: '/img/favicon.ico',
+    shortcut: 'https://uiartisan.vercel.app/img/favicon.ico',
+    icon: 'https://uiartisan.vercel.app/img/favicon.ico',
   },
 
   verification: {
