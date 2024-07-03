@@ -46,8 +46,14 @@ const InputGenerator = () => {
     const [maxLength, setMaxLength] = useState(100);
     const [pattern, setPattern] = useState('');
     const [patternPreset, setPatternPreset] = useState('custom');
+    interface PatternPreset {
+        label: string;
+        pattern: string;
+    }
 
-    const patternPresets = {
+    type PatternPresetKey = 'custom' | 'email' | 'password' | 'username' | 'url' | 'phoneUS' | 'zipUS' | 'ipv4' | 'creditCard' | 'date';
+
+    const patternPresets: Record<PatternPresetKey, PatternPreset> = {
         custom: { label: 'Custom', pattern: '' },
         email: { label: 'Email', pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,}$' },
         password: { label: 'Password (8+ chars, 1 uppercase, 1 lowercase, 1 number)', pattern: '(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,}' },
@@ -60,9 +66,10 @@ const InputGenerator = () => {
         date: { label: 'Date (YYYY-MM-DD)', pattern: '\\d{4}-\\d{2}-\\d{2}' },
     };
 
+    // Assuming patternPreset and setPattern are defined elsewhere in your component
     useEffect(() => {
         if (patternPreset !== 'custom') {
-            setPattern(patternPresets[patternPreset].pattern);
+            setPattern(patternPresets[patternPreset as Exclude<PatternPresetKey, 'custom'>].pattern);
         }
     }, [patternPreset]);
 
