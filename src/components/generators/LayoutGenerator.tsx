@@ -138,13 +138,13 @@ const LayoutGenerator = () => {
                         <div>
                             <label htmlFor="rowCount" className="block mb-1 font-semibold">Number of Rows:</label>
                             <input
-                                type="number"
+                                type="range"
                                 id="rowCount"
                                 min="1"
+                                max="6"
                                 value={rowCount}
-                                onChange={(e) => setRowCount(Math.max(1, parseInt(e.target.value) || rowCount))}
+                                onChange={(e) => setRowCount(Math.max(1, parseInt(e.target.value)))}
                                 className="border p-2 w-full"
-                                required
                             />
                         </div>
 

@@ -33,8 +33,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
                         </div>
                         <div className="hidden md:flex items-center space-x-8">
                             <Link href="/" className="hover:text-blue-200 transition duration-300">Home</Link>
-                            <Link href="#components" className="hover:text-blue-200 transition duration-300">Components</Link>
-                            <Link href="#contact" className="hover:text-blue-200 transition duration-300">Contact</Link>
+                            <Link href="/#components" className="hover:text-blue-200 transition duration-300">Components</Link>
+                            <Link href="/#contact" className="hover:text-blue-200 transition duration-300">Contact</Link>
                         </div>
                         <div className="md:hidden">
                             <button className="text-white focus:outline-none" onClick={toggleMenu}>
