@@ -34,7 +34,9 @@ import {
     faTable,
     faChartBar,
     faTags,
-
+    faPlay,
+    faScroll,
+    faVectorSquare,
     faChess,
 } from '@fortawesome/free-solid-svg-icons';
 
@@ -48,6 +50,12 @@ interface Component {
 export const components: Component[] = [
     { name: "Button Generator", description: "Create stylish buttons with customizable colors, sizes, and effects tailored to your brand.", link: "/generators/button", icon: faSquare },
     { name: "Layout Generator", description: "Design custom layouts with options for rows, columns, and styles to perfect your webpage structure.", link: "/generators/layout", icon: faTableColumns },
+    {
+        name: 'GSAP Animation Generator',
+        description: 'Create and customize GSAP animations with live preview',
+        icon: faPlay, // Make sure to import this icon
+        link: '/generators/gsap-generator'
+    },
     { name: "Input Generator", description: "Generate input fields with various styles and validation options to streamline user data entry.", link: "/generators/input", icon: faSquare },
     { name: "Shadow Generator", description: "Create custom shadows and add depth to your elements for a more dynamic visual experience.", link: "/generators/shadow", icon: faClone },
     { name: "Spinner Generator", description: "Design custom spinners to indicate loading or processing actions seamlessly integrated into your interface.", link: "/generators/spinner", icon: faSpinner },
@@ -85,7 +93,12 @@ export const components: Component[] = [
         icon: faTags,
         link: '/generators/tag-input'
     },
+
+
+
+
 ];
+
 
 export const funnyComponents: Component[] = [
     { name: 'Laugh Track', description: 'Add laughter to your app', icon: faLaughSquint, link: '/funny/laugh-track' },
