@@ -55,7 +55,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
         <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-          <p>&copy; {new Date().getFullYear()} UI Artisan. All rights reserved.</p>
+          <p>&copy; {new Date().getFullYear()} UI Artisan. All rights reserved. | Created by :  <a className='text-blue-400 text-decoration-underline text-md' target='_blank' href="https://www.codebyhicham.com">codebyhciham</a></p>
         </div>
       </div>
     </footer>
