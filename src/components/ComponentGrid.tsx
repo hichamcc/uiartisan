@@ -58,7 +58,7 @@ const ComponentGrid: React.FC = () => {
                             }`}
                     >
                         <FontAwesomeIcon icon={faCubes} className="mr-2" />
-                        Ready UI
+                        Tailwind
                     </button>
                     <button
                         onClick={() => setComponentType('Tailwind')}
