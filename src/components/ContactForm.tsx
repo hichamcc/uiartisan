@@ -1,5 +1,4 @@
 "use client";
-"use client";
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faComment, faPaperPlane, faSpinner } from '@fortawesome/free-solid-svg-icons';

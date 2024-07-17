@@ -2,10 +2,10 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch, faLaughBeam, faCode, faGamepad, faPaintBrush } from '@fortawesome/free-solid-svg-icons';
-import { components, funnyComponents, gameComponents, tailwindComponents } from '../data/Components';
+import { faSearch, faLaughBeam, faCode, faGamepad, faPaintBrush, faCubes } from '@fortawesome/free-solid-svg-icons';
+import { components, funnyComponents, gameComponents, tailwindComponents, readyUIComponents } from '../data/Components';
 
-type ComponentType = 'ui' | 'Tailwind' | 'funny' | 'game';
+type ComponentType = 'ui' | 'Tailwind' | 'funny' | 'game' | 'readyUI';
 
 const ComponentGrid: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -19,6 +19,8 @@ const ComponentGrid: React.FC = () => {
                 return funnyComponents;
             case 'game':
                 return gameComponents;
+            case 'readyUI':
+                return readyUIComponents;
             default:
                 return components;
         }
@@ -37,7 +39,9 @@ const ComponentGrid: React.FC = () => {
                 <h2 id="components" className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-0">
                     {componentType === 'ui' ? 'UI Components' :
                         componentType === 'Tailwind' ? 'Tailwind Components' :
-                            componentType === 'funny' ? 'Funny Components' : 'Game Components'}
+                            componentType === 'funny' ? 'Funny Components' :
+                                componentType === 'game' ? 'Game Components' :
+                                    'Ready UI Components'}
                 </h2>
                 <div className="flex space-x-2 flex-wrap">
                     <button
@@ -46,7 +50,15 @@ const ComponentGrid: React.FC = () => {
                             }`}
                     >
                         <FontAwesomeIcon icon={faCode} className="mr-2" />
-                        UI
+                        UI Generator
+                    </button>
+                    <button
+                        onClick={() => setComponentType('readyUI')}
+                        className={`px-4 py-2 rounded-md transition duration-300 flex items-center ${componentType === 'readyUI' ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+                            }`}
+                    >
+                        <FontAwesomeIcon icon={faCubes} className="mr-2" />
+                        Ready UI
                     </button>
                     <button
                         onClick={() => setComponentType('Tailwind')}
@@ -72,6 +84,7 @@ const ComponentGrid: React.FC = () => {
                         <FontAwesomeIcon icon={faGamepad} className="mr-2" />
                         Games
                     </button>
+
                 </div>
             </div>
 

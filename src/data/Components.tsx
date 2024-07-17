@@ -138,6 +138,7 @@ export const gameComponents = [
         icon: faKeyboard,
         link: "/games/typing-speed"
     },
+
     // Add more game components here
 ];
 
@@ -151,4 +152,22 @@ export const tailwindComponents: Component[] = [
     { name: 'Modal', description: 'Customizable dialog boxes', icon: faSquare, link: '/tailwind/modal' },
     { name: 'Navbar', description: 'Responsive navigation component', icon: faNavicon, link: '/tailwind/navbar' },
     // Add more Tailwind components as needed
+];
+
+
+export const readyUIComponents = [
+    {
+        name: "Buttons",
+        description: "A wide range of buttons for your app",
+        icon: faSquare,
+        link: "/ready/buttons",
+        subType: "buttons"
+    },
+    {
+        name: "Card Shadow",
+        description: "List of card shadows with different options",
+        icon: faClone,
+        link: "/ready/shadows",
+        subType: "cards"
+    }
 ];
