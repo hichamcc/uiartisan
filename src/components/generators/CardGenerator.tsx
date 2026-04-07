@@ -148,7 +148,7 @@ export function CustomCard() {
       ${showButton ? `<button className="bg-[${buttonBackgroundColor}] text-[${buttonTextColor}] rounded-[${buttonBorderRadius}px] px-4 py-2 hover:opacity-90 transition-opacity">${buttonText}</button>` : ''}
     </div>
   );
-}
+}`;
 
     return (
         <div className="flex flex-col md:flex-row">
