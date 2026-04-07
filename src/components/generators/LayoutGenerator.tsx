@@ -132,7 +132,7 @@ const LayoutGenerator = () => {
 
             <div className="flex flex-col md:flex-row min-h-screen">
                 {/* Parameters Side */}
-                <div className="w-full md:w-1/4 p-8 bg-white shadow-md overflow-y-auto">
+                <div className="w-full md:w-1/4 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                     <h1 className="text-3xl font-bold mb-6">Layout Generator</h1>
                     <div className="space-y-6">
                         <div>
@@ -244,7 +244,7 @@ const LayoutGenerator = () => {
                 </div>
 
                 {/* Preview and Code Side */}
-                <div className="w-full md:w-3/4 p-8 bg-gray-50">
+                <div className="w-full md:w-3/4 p-8 bg-zinc-50">
                     <h2 className="text-2xl font-bold mb-4">Preview</h2>
                     <div className="mb-4 flex space-x-4">
                         <button onClick={() => setViewportWidth('100%')} className="p-2 bg-white rounded shadow hover:bg-gray-100">
@@ -267,7 +267,7 @@ const LayoutGenerator = () => {
                         <div>
                             <div className="flex justify-between items-center mb-2">
                                 <h2 className="text-xl font-semibold">Generated HTML</h2>
-                                <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+                                <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                     <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                     Copy
                                 </button>
@@ -281,7 +281,7 @@ const LayoutGenerator = () => {
                         <div>
                             <div className="flex justify-between items-center mb-2">
                                 <h2 className="text-xl font-semibold">Generated CSS</h2>
-                                <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
+                                <button onClick={() => handleCopyCode(generateCSS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                     <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                     Copy
                                 </button>

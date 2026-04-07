@@ -78,7 +78,7 @@ ${buttons.map(button => `    <a href="${button.url}" class="social-icon" target=
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6">Simple Social Media Buttons</h2>
 
                 <div className="space-y-4">
@@ -88,7 +88,7 @@ ${buttons.map(button => `    <a href="${button.url}" class="social-icon" target=
                             type="color"
                             value={iconColor}
                             onChange={(e) => setIconColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -98,7 +98,7 @@ ${buttons.map(button => `    <a href="${button.url}" class="social-icon" target=
                             type="number"
                             value={iconSize}
                             onChange={(e) => setIconSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -108,7 +108,7 @@ ${buttons.map(button => `    <a href="${button.url}" class="social-icon" target=
                             type="number"
                             value={spacing}
                             onChange={(e) => setSpacing(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -120,7 +120,7 @@ ${buttons.map(button => `    <a href="${button.url}" class="social-icon" target=
                                     <select
                                         value={button.platform}
                                         onChange={(e) => updateButton(index, 'platform', e.target.value)}
-                                        className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                        className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                     >
                                         {Object.keys(socialIcons).map((platform) => (
                                             <option key={platform} value={platform}>{platform}</option>
@@ -134,12 +134,12 @@ ${buttons.map(button => `    <a href="${button.url}" class="social-icon" target=
                                     type="url"
                                     value={button.url}
                                     onChange={(e) => updateButton(index, 'url', e.target.value)}
-                                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                     placeholder="https://example.com"
                                 />
                             </div>
                         ))}
-                        <button onClick={addButton} className="mt-2 text-blue-500">
+                        <button onClick={addButton} className="mt-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors">
                             <FontAwesomeIcon icon={faPlus} className="mr-2" />
                             Add Button
                         </button>
@@ -147,7 +147,7 @@ ${buttons.map(button => `    <a href="${button.url}" class="social-icon" target=
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-8 bg-gray-800 overflow-hidden">
                     <style>{generateCSS()}</style>
@@ -164,7 +164,7 @@ ${buttons.map(button => `    <a href="${button.url}" class="social-icon" target=
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>
@@ -176,7 +176,7 @@ ${buttons.map(button => `    <a href="${button.url}" class="social-icon" target=
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateCSS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>

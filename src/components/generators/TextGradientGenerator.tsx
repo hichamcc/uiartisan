@@ -37,7 +37,7 @@ const TextGradientGenerator = () => {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6">Text Gradient Generator</h2>
 
                 <div className="space-y-4">
@@ -47,7 +47,7 @@ const TextGradientGenerator = () => {
                             type="text"
                             value={text}
                             onChange={(e) => setText(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -58,7 +58,7 @@ const TextGradientGenerator = () => {
                             value={fontSize}
                             onChange={(e) => setFontSize(Number(e.target.value))}
                             min="8"
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -74,12 +74,12 @@ const TextGradientGenerator = () => {
                                     newColors[index] = e.target.value;
                                     setGradientColors(newColors);
                                 }}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 mb-2"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50 mb-2"
                             />
                         ))}
                         <button
                             onClick={() => setGradientColors([...gradientColors, '#000000'])}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-200"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50 bg-gray-200"
                         >
                             Add Color
                         </button>
@@ -90,7 +90,7 @@ const TextGradientGenerator = () => {
                         <select
                             value={gradientDirection}
                             onChange={(e) => setGradientDirection(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="to right">Left to Right</option>
                             <option value="to left">Right to Left</option>
@@ -105,7 +105,7 @@ const TextGradientGenerator = () => {
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white overflow-hidden relative" style={{ height: '200px' }}>
                     <div className="gradient-text" style={{
@@ -121,7 +121,7 @@ const TextGradientGenerator = () => {
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateGradientCSS())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateGradientCSS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>
@@ -134,7 +134,7 @@ const TextGradientGenerator = () => {
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>

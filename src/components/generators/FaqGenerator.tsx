@@ -144,7 +144,7 @@ function toggleFAQ(index) {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto max-h-[95vh]">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto max-h-[95vh]">
                 <h2 className="text-2xl font-bold mb-6">FAQ Generator</h2>
 
                 <div className="space-y-4">
@@ -153,7 +153,7 @@ function toggleFAQ(index) {
                         <select
                             value={layout}
                             onChange={(e) => setLayout(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="accordion">Accordion</option>
                             <option value="grid">Grid</option>
@@ -165,7 +165,7 @@ function toggleFAQ(index) {
                             type="color"
                             value={questionColor}
                             onChange={(e) => setQuestionColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -174,7 +174,7 @@ function toggleFAQ(index) {
                             type="color"
                             value={answerColor}
                             onChange={(e) => setAnswerColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -183,7 +183,7 @@ function toggleFAQ(index) {
                             type="color"
                             value={backgroundColor}
                             onChange={(e) => setBackgroundColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -192,7 +192,7 @@ function toggleFAQ(index) {
                             type="color"
                             value={borderColor}
                             onChange={(e) => setBorderColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -201,7 +201,7 @@ function toggleFAQ(index) {
                             type="number"
                             value={borderRadius}
                             onChange={(e) => setBorderRadius(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -210,7 +210,7 @@ function toggleFAQ(index) {
                             type="number"
                             value={fontSize}
                             onChange={(e) => setFontSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -218,7 +218,7 @@ function toggleFAQ(index) {
                         <select
                             value={iconType}
                             onChange={(e) => setIconType(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="chevron">Chevron</option>
                             <option value="plus">Plus</option>
@@ -231,7 +231,7 @@ function toggleFAQ(index) {
                             type="color"
                             value={iconColor}
                             onChange={(e) => setIconColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -241,7 +241,7 @@ function toggleFAQ(index) {
                             step="0.1"
                             value={animationDuration}
                             onChange={(e) => setAnimationDuration(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -260,13 +260,13 @@ function toggleFAQ(index) {
                                     value={faq.question}
                                     onChange={(e) => updateFAQ(index, 'question', e.target.value)}
                                     placeholder="Question"
-                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                                 <textarea
                                     value={faq.answer}
                                     onChange={(e) => updateFAQ(index, 'answer', e.target.value)}
                                     placeholder="Answer"
-                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                     rows={3}
                                 />
                             </div>
@@ -274,7 +274,7 @@ function toggleFAQ(index) {
                     ))}
                     <button
                         onClick={addFAQ}
-                        className="mt-4 w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition duration-300"
+                        className="mt-4 w-full bg-zinc-900 text-white py-2 px-4 rounded hover:bg-zinc-700 transition-colors"
                     >
                         <FontAwesomeIcon icon={faPlus} className="mr-2" />
                         Add FAQ Item
@@ -282,7 +282,7 @@ function toggleFAQ(index) {
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white overflow-x-auto">
                     <style>{generateCSS()}</style>
@@ -293,7 +293,7 @@ function toggleFAQ(index) {
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>
@@ -305,7 +305,7 @@ function toggleFAQ(index) {
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateCSS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>

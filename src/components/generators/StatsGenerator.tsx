@@ -151,7 +151,7 @@ const StatsGenerator: React.FC = () => {
                         <button onClick={() => removeStat(index)} className="text-red-500">Remove</button>
                     </div>
                 ))}
-                <button onClick={addStat} className="mb-4 p-2 bg-blue-500 text-white rounded">Add Stat</button>
+                <button onClick={addStat} className="mb-4 p-2 bg-zinc-900 text-white rounded">Add Stat</button>
 
                 <div className="mb-4">
                     <label className="block mb-2">Layout</label>
@@ -234,7 +234,7 @@ const StatsGenerator: React.FC = () => {
                         <h3 className="text-xl font-semibold">HTML</h3>
                         <button
                             onClick={() => copyToClipboard(generateHTML(), 'html')}
-                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+                            className="px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-700 transition-colors"
                         >
                             <FontAwesomeIcon icon={copied.html ? faCheck : faCopy} className="mr-2" />
                             {copied.html ? 'Copied!' : 'Copy HTML'}
@@ -250,7 +250,7 @@ const StatsGenerator: React.FC = () => {
                         <h3 className="text-xl font-semibold">CSS</h3>
                         <button
                             onClick={() => copyToClipboard(generateCSS(), 'css')}
-                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+                            className="px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-700 transition-colors"
                         >
                             <FontAwesomeIcon icon={copied.css ? faCheck : faCopy} className="mr-2" />
                             {copied.css ? 'Copied!' : 'Copy CSS'}

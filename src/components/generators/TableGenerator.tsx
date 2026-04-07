@@ -213,7 +213,7 @@ ${tableStyle.responsiveTable ? `
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto max-h-[95vh]">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto max-h-[95vh]">
                 <h2 className="text-2xl font-bold mb-6">Table Generator</h2>
 
                 <div className="space-y-4">
@@ -223,7 +223,7 @@ ${tableStyle.responsiveTable ? `
                             type="color"
                             value={tableStyle.borderColor}
                             onChange={(e) => updateStyle('borderColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -233,7 +233,7 @@ ${tableStyle.responsiveTable ? `
                             type="color"
                             value={tableStyle.headerBackgroundColor}
                             onChange={(e) => updateStyle('headerBackgroundColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -243,7 +243,7 @@ ${tableStyle.responsiveTable ? `
                             type="color"
                             value={tableStyle.headerTextColor}
                             onChange={(e) => updateStyle('headerTextColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -253,7 +253,7 @@ ${tableStyle.responsiveTable ? `
                             type="color"
                             value={tableStyle.rowEvenBackgroundColor}
                             onChange={(e) => updateStyle('rowEvenBackgroundColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -263,7 +263,7 @@ ${tableStyle.responsiveTable ? `
                             type="color"
                             value={tableStyle.rowOddBackgroundColor}
                             onChange={(e) => updateStyle('rowOddBackgroundColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -273,7 +273,7 @@ ${tableStyle.responsiveTable ? `
                             type="color"
                             value={tableStyle.cellTextColor}
                             onChange={(e) => updateStyle('cellTextColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -283,7 +283,7 @@ ${tableStyle.responsiveTable ? `
                             type="number"
                             value={tableStyle.fontSize}
                             onChange={(e) => updateStyle('fontSize', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -293,7 +293,7 @@ ${tableStyle.responsiveTable ? `
                             type="number"
                             value={tableStyle.padding}
                             onChange={(e) => updateStyle('padding', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -303,7 +303,7 @@ ${tableStyle.responsiveTable ? `
                             type="number"
                             value={tableStyle.borderWidth}
                             onChange={(e) => updateStyle('borderWidth', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -313,7 +313,7 @@ ${tableStyle.responsiveTable ? `
                             type="number"
                             value={tableStyle.borderRadius}
                             onChange={(e) => updateStyle('borderRadius', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -323,7 +323,7 @@ ${tableStyle.responsiveTable ? `
                                 type="checkbox"
                                 checked={tableStyle.hoverHighlight}
                                 onChange={(e) => updateStyle('hoverHighlight', e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Hover Highlight</span>
                         </label>
@@ -335,7 +335,7 @@ ${tableStyle.responsiveTable ? `
                                 type="checkbox"
                                 checked={tableStyle.stripedRows}
                                 onChange={(e) => updateStyle('stripedRows', e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Striped Rows</span>
                         </label>
@@ -347,7 +347,7 @@ ${tableStyle.responsiveTable ? `
                                 type="checkbox"
                                 checked={tableStyle.responsiveTable}
                                 onChange={(e) => updateStyle('responsiveTable', e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Responsive Table</span>
                         </label>
@@ -358,7 +358,7 @@ ${tableStyle.responsiveTable ? `
                             <FontAwesomeIcon icon={faPlus} className="mr-2" />
                             Add Row
                         </button>
-                        <button onClick={addColumn} className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+                        <button onClick={addColumn} className="px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-700">
                             <FontAwesomeIcon icon={faPlus} className="mr-2" />
                             Add Column
                         </button>
@@ -366,7 +366,7 @@ ${tableStyle.responsiveTable ? `
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-8 bg-white overflow-hidden">
                     <style>{generateCSS()}</style>
@@ -408,7 +408,7 @@ ${tableStyle.responsiveTable ? `
                                                 ) : (
                                                     <div className="flex items-center justify-between">
                                                         <span>{cell}</span>
-                                                        <button onClick={() => startEditing(rowIndex, colIndex)} className="text-blue-500">
+                                                        <button onClick={() => startEditing(rowIndex, colIndex)} className="text-sm text-zinc-600 hover:text-zinc-900 transition-colors">
                                                             <FontAwesomeIcon icon={faEdit} />
                                                         </button>
                                                     </div>
@@ -431,7 +431,7 @@ ${tableStyle.responsiveTable ? `
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>
@@ -443,7 +443,7 @@ ${tableStyle.responsiveTable ? `
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateCSS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>

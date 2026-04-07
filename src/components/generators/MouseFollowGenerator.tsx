@@ -267,7 +267,7 @@ updatePosition();
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6">Mouse Follow Generator</h2>
 
                 <div className="space-y-4">
@@ -277,7 +277,7 @@ updatePosition();
                             type="number"
                             value={styles.width}
                             onChange={(e) => updateStyle('width', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -287,7 +287,7 @@ updatePosition();
                             type="number"
                             value={styles.height}
                             onChange={(e) => updateStyle('height', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -296,7 +296,7 @@ updatePosition();
                         <select
                             value={styles.shape}
                             onChange={(e) => updateStyle('shape', e.target.value as FollowerStyles['shape'])}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="circle">Circle</option>
                             <option value="square">Square</option>
@@ -312,7 +312,7 @@ updatePosition();
                             <textarea
                                 value={styles.customSVG}
                                 onChange={(e) => updateStyle('customSVG', e.target.value)}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 rows={4}
                                 placeholder="Paste your SVG code here"
                             />
@@ -325,7 +325,7 @@ updatePosition();
                             type="color"
                             value={styles.backgroundColor}
                             onChange={(e) => updateStyle('backgroundColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -348,7 +348,7 @@ updatePosition();
                             type="number"
                             value={styles.zIndex}
                             onChange={(e) => updateStyle('zIndex', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -357,7 +357,7 @@ updatePosition();
                         <select
                             value={styles.followStyle}
                             onChange={(e) => updateStyle('followStyle', e.target.value as FollowerStyles['followStyle'])}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="instant">Instant</option>
                             <option value="smooth">Smooth</option>
@@ -375,13 +375,13 @@ updatePosition();
                             max="1"
                             value={styles.delay}
                             onChange={(e) => updateStyle('delay', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div
                     ref={previewRef}
@@ -397,7 +397,7 @@ updatePosition();
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>
@@ -409,7 +409,7 @@ updatePosition();
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateCSS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>
@@ -421,7 +421,7 @@ updatePosition();
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated JavaScript</h2>
-                            <button onClick={() => handleCopyCode(generateJS())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateJS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>

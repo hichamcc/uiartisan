@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from 'react';
+import { CodePanel, toTw } from './CodePanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 const SwitchGenerator = () => {
     const [width, setWidth] = useState(85);
@@ -124,6 +122,22 @@ const SwitchGenerator = () => {
     `;
     };
 
+    const translateX = width - handleSize - (height - handleSize);
+    const handleOffset = Math.round((height - handleSize) / 2);
+
+    const generateTailwind = () =>
+        `<label class="relative inline-flex items-center cursor-pointer">
+  <input type="checkbox" class="sr-only peer" />
+  <div class="relative w-[${width}px] h-[${height}px] bg-[${offColor}] peer-checked:bg-[${onColor}] rounded-[${borderRadius}px] transition-colors duration-[${Math.round(animationDuration * 1000)}ms]">
+    ${showLabels ? `<span class="absolute right-3 top-1/2 -translate-y-1/2 text-[${labelSize}px] text-[${labelColor}] font-medium">${labelOn}</span>
+    <span class="absolute left-3 top-1/2 -translate-y-1/2 text-[${labelSize}px] text-[${labelColor}] font-medium peer-checked:opacity-0">${labelOff}</span>` : ''}
+    <div class="absolute top-[${handleOffset}px] left-[${handleOffset}px] w-[${handleSize}px] h-[${handleSize}px] bg-[${handleColor}] rounded-full shadow transition-transform duration-[${Math.round(animationDuration * 1000)}ms] peer-checked:translate-x-[${translateX}px]"></div>
+  </div>
+</label>`;
+
+    const generateReact = () =>
+        `import { useState } from 'react';\n\nexport function Switch() {\n  const [on, setOn] = useState(false);\n  return (\n    <label className="relative inline-flex items-center cursor-pointer">\n      <input type="checkbox" checked={on} onChange={() => setOn(!on)} className="sr-only peer" />\n      <div className="relative w-[${width}px] h-[${height}px] bg-[${offColor}] peer-checked:bg-[${onColor}] rounded-[${borderRadius}px] transition-colors duration-[${Math.round(animationDuration * 1000)}ms]">\n        ${showLabels ? `<span className="absolute right-3 top-1/2 -translate-y-1/2 text-[${labelSize}px] text-[${labelColor}] font-medium">${labelOn}</span>\n        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[${labelSize}px] text-[${labelColor}] font-medium peer-checked:opacity-0">${labelOff}</span>` : ''}\n        <div className="absolute top-[${handleOffset}px] left-[${handleOffset}px] w-[${handleSize}px] h-[${handleSize}px] bg-[${handleColor}] rounded-full shadow transition-transform duration-[${Math.round(animationDuration * 1000)}ms] peer-checked:translate-x-[${translateX}px]" />\n      </div>\n    </label>\n  );\n}`;
+
     const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
@@ -131,7 +145,7 @@ const SwitchGenerator = () => {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6">Switch Generator</h2>
 
                 <div className="space-y-4">
@@ -141,7 +155,7 @@ const SwitchGenerator = () => {
                             type="number"
                             value={width}
                             onChange={(e) => setWidth(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -150,7 +164,7 @@ const SwitchGenerator = () => {
                             type="number"
                             value={height}
                             onChange={(e) => setHeight(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -159,7 +173,7 @@ const SwitchGenerator = () => {
                             type="number"
                             value={borderRadius}
                             onChange={(e) => setBorderRadius(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -168,7 +182,7 @@ const SwitchGenerator = () => {
                             type="color"
                             value={onColor}
                             onChange={(e) => setOnColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -177,7 +191,7 @@ const SwitchGenerator = () => {
                             type="color"
                             value={offColor}
                             onChange={(e) => setOffColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -186,7 +200,7 @@ const SwitchGenerator = () => {
                             type="color"
                             value={handleColor}
                             onChange={(e) => setHandleColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -195,7 +209,7 @@ const SwitchGenerator = () => {
                             type="number"
                             value={handleSize}
                             onChange={(e) => setHandleSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -204,7 +218,7 @@ const SwitchGenerator = () => {
                                 type="checkbox"
                                 checked={showLabels}
                                 onChange={(e) => setShowLabels(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Show Labels</span>
                         </label>
@@ -217,7 +231,7 @@ const SwitchGenerator = () => {
                                     type="text"
                                     value={labelOn}
                                     onChange={(e) => setLabelOn(e.target.value)}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                             <div>
@@ -226,7 +240,7 @@ const SwitchGenerator = () => {
                                     type="text"
                                     value={labelOff}
                                     onChange={(e) => setLabelOff(e.target.value)}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                             <div>
@@ -235,7 +249,7 @@ const SwitchGenerator = () => {
                                     type="color"
                                     value={labelColor}
                                     onChange={(e) => setLabelColor(e.target.value)}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                             <div>
@@ -244,7 +258,7 @@ const SwitchGenerator = () => {
                                     type="number"
                                     value={labelSize}
                                     onChange={(e) => setLabelSize(Number(e.target.value))}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                         </>
@@ -257,13 +271,13 @@ const SwitchGenerator = () => {
                             step="0.1"
                             value={animationDuration}
                             onChange={(e) => setAnimationDuration(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white overflow-x-auto m-auto">
                     <style>{generateCSS()}</style>
@@ -271,32 +285,14 @@ const SwitchGenerator = () => {
 
                 </div>
 
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div >
     );

@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from 'react';
+import { CodePanel, toTw } from './CodePanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 const SpinnerGenerator = () => {
     const [spinnerType, setSpinnerType] = useState('circle');
@@ -262,6 +260,16 @@ const SpinnerGenerator = () => {
         return html;
     };
 
+    const generateTailwind = () => {
+        const base = `w-[${size}px] h-[${size}px] rounded-full border-[${borderWidth}px] border-[${secondaryColor}] border-t-[${primaryColor}] animate-spin`;
+        return `<div class="inline-flex ${textPosition === 'bottom' || textPosition === 'top' ? 'flex-col' : 'flex-row'} items-center gap-2">
+  <div class="${base}"></div>${text ? `\n  <span class="text-[${textSize}px] text-[${textColor}]">${text}</span>` : ''}
+</div>`;
+    };
+
+    const generateReact = () =>
+        `import React from 'react';\n\nexport function Spinner() {\n  return (\n    <div className="inline-flex items-center gap-2">\n      <div className="w-[${size}px] h-[${size}px] rounded-full border-[${borderWidth}px] border-[${secondaryColor}] border-t-[${primaryColor}] animate-spin" />\n      ${text ? `<span className="text-[${textSize}px] text-[${textColor}]">{text}</span>` : ''}\n    </div>\n  );\n}`;
+
     const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
@@ -270,7 +278,7 @@ const SpinnerGenerator = () => {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6">Spinner Generator</h2>
 
                 <div className="space-y-4">
@@ -279,7 +287,7 @@ const SpinnerGenerator = () => {
                         <select
                             value={spinnerType}
                             onChange={(e) => setSpinnerType(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="circle">Circle</option>
                             <option value="dots">Dots</option>
@@ -295,7 +303,7 @@ const SpinnerGenerator = () => {
                             type="number"
                             value={size}
                             onChange={(e) => setSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     {spinnerType === 'circle' && (
@@ -305,7 +313,7 @@ const SpinnerGenerator = () => {
                                 type="number"
                                 value={borderWidth}
                                 onChange={(e) => setBorderWidth(Number(e.target.value))}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                         </div>
                     )}
@@ -315,7 +323,7 @@ const SpinnerGenerator = () => {
                             type="color"
                             value={primaryColor}
                             onChange={(e) => setPrimaryColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     {spinnerType === 'circle' && (
@@ -325,7 +333,7 @@ const SpinnerGenerator = () => {
                                 type="color"
                                 value={secondaryColor}
                                 onChange={(e) => setSecondaryColor(e.target.value)}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                         </div>
                     )}
@@ -336,7 +344,7 @@ const SpinnerGenerator = () => {
                             step="0.1"
                             value={animationDuration}
                             onChange={(e) => setAnimationDuration(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -344,7 +352,7 @@ const SpinnerGenerator = () => {
                         <select
                             value={animationTimingFunction}
                             onChange={(e) => setAnimationTimingFunction(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="linear">Linear</option>
                             <option value="ease">Ease</option>
@@ -359,7 +367,7 @@ const SpinnerGenerator = () => {
                             type="text"
                             value={text}
                             onChange={(e) => setText(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -367,7 +375,7 @@ const SpinnerGenerator = () => {
                         <select
                             value={textPosition}
                             onChange={(e) => setTextPosition(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="top">Top</option>
                             <option value="right">Right</option>
@@ -381,7 +389,7 @@ const SpinnerGenerator = () => {
                             type="color"
                             value={textColor}
                             onChange={(e) => setTextColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -390,45 +398,27 @@ const SpinnerGenerator = () => {
                             type="number"
                             value={textSize}
                             onChange={(e) => setTextSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white min-h-[300px] flex items-center justify-center">
                     <style>{generateCSS()}</style>
                     <div dangerouslySetInnerHTML={{ __html: generateHTML() }} />
                 </div>
 
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div>
     );

@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from 'react';
+import { CodePanel, toTw } from './CodePanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const ShadowDivGenerator = () => {
     const [shadows, setShadows] = useState([
@@ -80,6 +79,18 @@ const ShadowDivGenerator = () => {
         return '<div class="shadow-div"></div>';
     };
 
+    const generateTailwind = () => {
+        const shadow = generateBoxShadow().replace(/ /g, '_').replace(/,\s*/g, ',');
+        const hover = hoverEffect ? `hover:scale-[${hoverScale}] transition-all duration-[${Math.round(hoverTransition * 1000)}ms]` : '';
+        return `<div class="w-[${divWidth}px] h-[${divHeight}px] bg-[${divBackgroundColor}] rounded-[${divBorderRadius}px] shadow-[${shadow}] ${divRotation !== 0 ? `rotate-[${divRotation}deg]` : ''} ${hover}"></div>`;
+    };
+
+    const generateReact = () => {
+        const shadow = generateBoxShadow().replace(/ /g, '_').replace(/,\s*/g, ',');
+        const hover = hoverEffect ? `hover:scale-[${hoverScale}] transition-all duration-[${Math.round(hoverTransition * 1000)}ms]` : '';
+        return `import React from 'react';\n\nexport function ShadowBox() {\n  return (\n    <div\n      className="w-[${divWidth}px] h-[${divHeight}px] bg-[${divBackgroundColor}] rounded-[${divBorderRadius}px] shadow-[${shadow}] ${hover}"\n    />\n  );\n}`;
+    };
+
     const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
@@ -87,7 +98,7 @@ const ShadowDivGenerator = () => {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto max-h-[95vh]">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto max-h-[95vh]">
                 <h2 className="text-2xl font-bold mb-6">Shadow DIV Generator</h2>
 
                 <div className="space-y-4">
@@ -97,7 +108,7 @@ const ShadowDivGenerator = () => {
                             type="number"
                             value={divWidth}
                             onChange={(e) => setDivWidth(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -106,7 +117,7 @@ const ShadowDivGenerator = () => {
                             type="number"
                             value={divHeight}
                             onChange={(e) => setDivHeight(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -115,7 +126,7 @@ const ShadowDivGenerator = () => {
                             type="color"
                             value={divBackgroundColor}
                             onChange={(e) => setDivBackgroundColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -124,7 +135,7 @@ const ShadowDivGenerator = () => {
                             type="number"
                             value={divBorderRadius}
                             onChange={(e) => setDivBorderRadius(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -133,7 +144,7 @@ const ShadowDivGenerator = () => {
                             type="number"
                             value={divRotation}
                             onChange={(e) => setDivRotation(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -143,7 +154,7 @@ const ShadowDivGenerator = () => {
                             step="0.1"
                             value={divScale}
                             onChange={(e) => setDivScale(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -153,7 +164,7 @@ const ShadowDivGenerator = () => {
                                 type="checkbox"
                                 checked={hoverEffect}
                                 onChange={(e) => setHoverEffect(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Enable Hover Effect</span>
                         </label>
@@ -168,7 +179,7 @@ const ShadowDivGenerator = () => {
                                     step="0.1"
                                     value={hoverTransition}
                                     onChange={(e) => setHoverTransition(Number(e.target.value))}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                             <div>
@@ -178,7 +189,7 @@ const ShadowDivGenerator = () => {
                                     step="0.01"
                                     value={hoverScale}
                                     onChange={(e) => setHoverScale(Number(e.target.value))}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                         </>
@@ -196,7 +207,7 @@ const ShadowDivGenerator = () => {
                                     type="number"
                                     value={shadow.offsetX}
                                     onChange={(e) => updateShadow(index, 'offsetX', Number(e.target.value))}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                             <div>
@@ -205,7 +216,7 @@ const ShadowDivGenerator = () => {
                                     type="number"
                                     value={shadow.offsetY}
                                     onChange={(e) => updateShadow(index, 'offsetY', Number(e.target.value))}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                             <div>
@@ -214,7 +225,7 @@ const ShadowDivGenerator = () => {
                                     type="number"
                                     value={shadow.blur}
                                     onChange={(e) => updateShadow(index, 'blur', Number(e.target.value))}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                             <div>
@@ -223,7 +234,7 @@ const ShadowDivGenerator = () => {
                                     type="number"
                                     value={shadow.spread}
                                     onChange={(e) => updateShadow(index, 'spread', Number(e.target.value))}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                             <div>
@@ -232,7 +243,7 @@ const ShadowDivGenerator = () => {
                                     type="color"
                                     value={shadow.color}
                                     onChange={(e) => updateShadow(index, 'color', e.target.value)}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             </div>
                             <div>
@@ -241,7 +252,7 @@ const ShadowDivGenerator = () => {
                                         type="checkbox"
                                         checked={shadow.inset}
                                         onChange={(e) => updateShadow(index, 'inset', e.target.checked)}
-                                        className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                        className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                     />
                                     <span className="ml-2 text-sm text-gray-700">Inset</span>
                                 </label>
@@ -265,39 +276,21 @@ const ShadowDivGenerator = () => {
                 </button>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white min-h-[300px] flex items-center justify-center">
                     <style>{generateCSS()}</style>
                     <div className="shadow-div"></div>
                 </div>
 
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div>
     );

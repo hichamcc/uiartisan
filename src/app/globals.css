@@ -18,12 +18,7 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: #fafafa;
 }
 
 @layer utilities {
@@ -80,9 +75,9 @@ input[type="time"]:focus,
 input[type="color"]:focus,
 select:focus,
 textarea:focus {
-  border-color: #3b82f6;
+  border-color: #71717a;
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(113, 113, 122, 0.2);
 }
 
 /* Placeholder styles */
@@ -138,8 +133,8 @@ input[type="radio"] {
 
 input[type="checkbox"]:checked,
 input[type="radio"]:checked {
-  background-color: #3b82f6;
-  border-color: #3b82f6;
+  background-color: #18181b;
+  border-color: #18181b;
 }
 
 input[type="checkbox"]:checked {

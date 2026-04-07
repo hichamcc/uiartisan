@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy, faDesktop, faTablet, faMobile } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { faDesktop, faTablet, faMobile } from '@fortawesome/free-solid-svg-icons';
+import { CodePanel, toTw } from './CodePanel';
 
 const ButtonGenerator = () => {
 
@@ -81,15 +80,40 @@ const ButtonGenerator = () => {
         return `<button class="custom-button">${buttonText}</button>`;
     };
 
-    const handleCopyCode = (code: any) => {
-        navigator.clipboard.writeText(code);
-        // Optionally, add a toast notification here
+    const fontWeightClass: Record<number, string> = {
+        100: 'font-thin', 200: 'font-extralight', 300: 'font-light',
+        400: 'font-normal', 500: 'font-medium', 600: 'font-semibold',
+        700: 'font-bold', 800: 'font-extrabold', 900: 'font-black',
     };
+
+    const buildTailwindClasses = () => [
+        `w-[${width}px]`,
+        `h-[${height}px]`,
+        `bg-[${bgColor}]`,
+        `text-[${textColor}]`,
+        `rounded-[${borderRadius}px]`,
+        fontWeightClass[fontWeight] ?? `font-[${fontWeight}]`,
+        shadow !== 'none' ? `shadow-[${toTw(shadow)}]` : '',
+        borderWidth > 0 ? `border-[${borderWidth}px] border-solid border-[${borderColor}]` : 'border-0',
+        textTransform !== 'none' ? textTransform : '',
+        'transition-all',
+        `duration-[${Math.round(transitionSpeed * 1000)}ms]`,
+        `hover:bg-[${hoverBgColor}]`,
+        `hover:text-[${hoverTextColor}]`,
+        hoverEffect !== 'none' ? `hover:[filter:${hoverEffect}]` : '',
+        focusOutline !== 'none' ? `focus:outline-[${toTw(focusOutline)}]` : 'focus:outline-none',
+    ].filter(Boolean).join(' ');
+
+    const generateTailwind = () =>
+        `<button class="${buildTailwindClasses()}">\n  ${buttonText}\n</button>`;
+
+    const generateReact = () =>
+        `import React from 'react';\n\nexport function CustomButton() {\n  return (\n    <button\n      type="button"\n      className="${buildTailwindClasses()}"\n    >\n      ${buttonText}\n    </button>\n  );\n}`;
 
     return (
         <div className="flex flex-col md:flex-row">
             {/* Parameters Side */}
-            <div className="w-full md:w-1/4 p-8 bg-white shadow-md overflow-y-scroll max-h-[calc(100vh-56px)]">
+            <div className="w-full md:w-1/4 p-8 bg-white border-r border-zinc-200 overflow-y-scroll max-h-[calc(100vh-56px)]">
                 <h2 className="text-2xl font-bold mb-6">Button Parameters</h2>
                 <div className="space-y-4">
                     <div>
@@ -98,7 +122,7 @@ const ButtonGenerator = () => {
                             type="text"
                             value={buttonText}
                             onChange={(e) => setButtonText(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -107,7 +131,7 @@ const ButtonGenerator = () => {
                             type="color"
                             value={bgColor}
                             onChange={(e) => setBgColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -116,7 +140,7 @@ const ButtonGenerator = () => {
                             type="color"
                             value={textColor}
                             onChange={(e) => setTextColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -125,7 +149,7 @@ const ButtonGenerator = () => {
                             type="number"
                             value={borderRadius}
                             onChange={(e) => setBorderRadius(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -133,7 +157,7 @@ const ButtonGenerator = () => {
                         <select
                             value={shadow}
                             onChange={(e) => setShadow(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             {shadowOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -147,7 +171,7 @@ const ButtonGenerator = () => {
                         <select
                             value={hoverEffect}
                             onChange={(e) => setHoverEffect(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             {hoverEffectOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -162,7 +186,7 @@ const ButtonGenerator = () => {
                             type="color"
                             value={hoverBgColor}
                             onChange={(e) => setHoverBgColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -171,7 +195,7 @@ const ButtonGenerator = () => {
                             type="color"
                             value={hoverTextColor}
                             onChange={(e) => setHoverTextColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -180,7 +204,7 @@ const ButtonGenerator = () => {
                             type="number"
                             value={width}
                             onChange={(e) => setWidth(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -189,7 +213,7 @@ const ButtonGenerator = () => {
                             type="number"
                             value={height}
                             onChange={(e) => setHeight(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -198,7 +222,7 @@ const ButtonGenerator = () => {
                             type="number"
                             value={fontWeight}
                             onChange={(e) => setFontWeight(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -207,7 +231,7 @@ const ButtonGenerator = () => {
                             type="number"
                             value={borderWidth}
                             onChange={(e) => setBorderWidth(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -216,7 +240,7 @@ const ButtonGenerator = () => {
                             type="color"
                             value={borderColor}
                             onChange={(e) => setBorderColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -224,7 +248,7 @@ const ButtonGenerator = () => {
                         <select
                             value={textTransform}
                             onChange={(e) => setTextTransform(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="none">None</option>
                             <option value="uppercase">Uppercase</option>
@@ -239,7 +263,7 @@ const ButtonGenerator = () => {
                             step="0.1"
                             value={transitionSpeed}
                             onChange={(e) => setTransitionSpeed(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -247,7 +271,7 @@ const ButtonGenerator = () => {
                         <select
                             value={focusOutline}
                             onChange={(e) => setFocusOutline(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             {focusOutlineOptions.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -260,7 +284,7 @@ const ButtonGenerator = () => {
             </div>
 
             {/* Preview and Code Side */}
-            <div className="w-full md:w-3/4 p-8 bg-gray-50">
+            <div className="w-full md:w-3/4 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
 
                 <div className="border p-4 bg-white min-h-[200px] flex items-center justify-center" style={{ width: viewportWidth, margin: '0 auto' }}>
@@ -268,33 +292,14 @@ const ButtonGenerator = () => {
                     <button className="custom-button">{buttonText}</button>
                 </div>
 
-                {/* Generated Code */}
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind HTML', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div>
     );

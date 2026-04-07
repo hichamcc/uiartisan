@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from 'react';
+import { CodePanel, toTw } from './CodePanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy, faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { faStar as faStarSolid } from '@fortawesome/free-solid-svg-icons';
 
 const RatingGenerator = () => {
     const [ratingType, setRatingType] = useState('star');
@@ -80,6 +79,20 @@ const RatingGenerator = () => {
 `;
     };
 
+    const generateTailwind = () =>
+        `<div class="inline-flex items-center gap-2">
+  <span class="text-[${fontSize}px] text-[${labelColor}]">${labelText}</span>
+  <div class="inline-flex gap-[${spacing}px]">
+    ${Array.from({ length: maxRating }, (_, i) =>
+        `<span class="text-[${size}px] cursor-pointer text-[${i < initialRating ? activeColor : inactiveColor}] hover:text-[${activeColor}] transition-colors duration-[${Math.round(animationDuration * 1000)}ms]">${ratingType === 'star' ? '★' : ratingType === 'heart' ? '♥' : '●'}</span>`
+    ).join('\n    ')}
+  </div>
+  ${showValue ? `<span class="text-[${fontSize}px] font-bold">${initialRating}/${maxRating}</span>` : ''}
+</div>`;
+
+    const generateReact = () =>
+        `import { useState } from 'react';\n\nexport function Rating() {\n  const [rating, setRating] = useState(${initialRating});\n  const [hover, setHover] = useState(0);\n  return (\n    <div className="inline-flex items-center gap-2">\n      <span className="text-[${fontSize}px] text-[${labelColor}]">${labelText}</span>\n      <div className="inline-flex gap-[${spacing}px]">\n        {Array.from({ length: ${maxRating} }, (_, i) => (\n          <button\n            key={i}\n            onClick={() => !${readOnly} && setRating(i + 1)}\n            onMouseEnter={() => !${readOnly} && setHover(i + 1)}\n            onMouseLeave={() => setHover(0)}\n            className={\`text-[${size}px] transition-colors duration-[${Math.round(animationDuration * 1000)}ms] \${i < (hover || rating) ? 'text-[${activeColor}]' : 'text-[${inactiveColor}]'}\`}\n          >\n            ${ratingType === 'star' ? '★' : ratingType === 'heart' ? '♥' : '●'}\n          </button>\n        ))}\n      </div>\n      ${showValue ? '{rating}/{maxRating}' : ''}\n    </div>\n  );\n}`;
+
     const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
@@ -87,7 +100,7 @@ const RatingGenerator = () => {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto max-h-[95vh]">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto max-h-[95vh]">
                 <h2 className="text-2xl font-bold mb-6">Rating Generator</h2>
 
                 <div className="space-y-4">
@@ -96,7 +109,7 @@ const RatingGenerator = () => {
                         <select
                             value={ratingType}
                             onChange={(e) => setRatingType(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="star">Star</option>
                             <option value="number">Number</option>
@@ -108,7 +121,7 @@ const RatingGenerator = () => {
                             type="number"
                             value={maxRating}
                             onChange={(e) => setMaxRating(Math.max(1, parseInt(e.target.value)))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -117,7 +130,7 @@ const RatingGenerator = () => {
                             type="number"
                             value={size}
                             onChange={(e) => setSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -126,7 +139,7 @@ const RatingGenerator = () => {
                             type="color"
                             value={activeColor}
                             onChange={(e) => setActiveColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -135,7 +148,7 @@ const RatingGenerator = () => {
                             type="color"
                             value={inactiveColor}
                             onChange={(e) => setInactiveColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -144,7 +157,7 @@ const RatingGenerator = () => {
                             type="number"
                             value={spacing}
                             onChange={(e) => setSpacing(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -154,7 +167,7 @@ const RatingGenerator = () => {
                             step="0.1"
                             value={animationDuration}
                             onChange={(e) => setAnimationDuration(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -163,7 +176,7 @@ const RatingGenerator = () => {
                                 type="checkbox"
                                 checked={showValue}
                                 onChange={(e) => setShowValue(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Show Value</span>
                         </label>
@@ -174,7 +187,7 @@ const RatingGenerator = () => {
                             type="text"
                             value={labelText}
                             onChange={(e) => setLabelText(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -183,7 +196,7 @@ const RatingGenerator = () => {
                             type="color"
                             value={labelColor}
                             onChange={(e) => setLabelColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -192,7 +205,7 @@ const RatingGenerator = () => {
                             type="number"
                             value={fontSize}
                             onChange={(e) => setFontSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -201,7 +214,7 @@ const RatingGenerator = () => {
                             type="number"
                             value={initialRating}
                             onChange={(e) => setInitialRating(Math.min(maxRating, Math.max(0, Number(e.target.value))))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -210,7 +223,7 @@ const RatingGenerator = () => {
                                 type="checkbox"
                                 checked={readOnly}
                                 onChange={(e) => setReadOnly(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Read Only</span>
                         </label>
@@ -218,39 +231,21 @@ const RatingGenerator = () => {
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white min-h-[100px] flex items-center justify-center">
                     <style>{generateCSS()}</style>
                     <div dangerouslySetInnerHTML={{ __html: generateHTML() }} />
                 </div>
 
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div>
     );

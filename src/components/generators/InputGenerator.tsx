@@ -1,9 +1,8 @@
 "use client";
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy, faDesktop, faTablet, faMobile } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { faDesktop, faTablet, faMobile } from '@fortawesome/free-solid-svg-icons';
+import { CodePanel, toTw } from './CodePanel';
 
 const InputGenerator = () => {
     const [isErrorState, setIsErrorState] = useState(false);
@@ -200,6 +199,64 @@ ${hasAnimation ? `
         return html;
     };
 
+    const buildInputClasses = () => [
+        `w-[${width}px]`,
+        `h-[${height}px]`,
+        `bg-[${backgroundColor}]`,
+        `text-[${textColor}]`,
+        `text-[${fontSize}px]`,
+        `rounded-[${borderRadius}px]`,
+        `border-[${borderWidth}px] border-[${borderStyle}] border-[${borderColor}]`,
+        `px-[${padding}px]`,
+        hasIcon ? (iconPosition === 'left' ? `pl-[${padding + 20}px]` : `pr-[${padding + 20}px]`) : '',
+        `focus:outline-none focus:border-[${focusBorderColor}] focus:bg-[${focusBackgroundColor}]`,
+        `hover:border-[${hoverBorderColor}] hover:bg-[${hoverBackgroundColor}]`,
+        'transition',
+    ].filter(Boolean).join(' ');
+
+    const generateTailwind = () => {
+        const inputAttrs = [
+            `type="${inputType}"`,
+            placeholder ? `placeholder="${placeholder}"` : '',
+            defaultValue ? `value="${defaultValue}"` : '',
+            isRequired ? 'required' : '',
+            isDisabled ? 'disabled' : '',
+            isReadOnly ? 'readOnly' : '',
+        ].filter(Boolean).join('\n    ');
+
+        const lines = [];
+        if (label) lines.push(`<label class="block text-sm font-medium text-zinc-700 mb-1">${label}</label>`);
+        if (hasIcon) lines.push(`<div class="relative">`);
+        if (hasIcon) lines.push(`  <span class="absolute ${iconPosition}-3 top-1/2 -translate-y-1/2">📌</span>`);
+        lines.push(`<input\n  class="${buildInputClasses()}"\n  ${inputAttrs}\n/>`);
+        if (hasIcon) lines.push(`</div>`);
+        return lines.join('\n');
+    };
+
+    const generateReact = () => {
+        const inputAttrs = [
+            `type="${inputType}"`,
+            placeholder ? `placeholder="${placeholder}"` : '',
+            isRequired ? 'required' : '',
+            isDisabled ? 'disabled' : '',
+            isReadOnly ? 'readOnly' : '',
+        ].filter(Boolean).join('\n      ');
+
+        return `import React from 'react';
+
+export function CustomInput() {
+  return (
+    <div className="flex flex-col gap-1">
+      ${label ? `<label className="block text-sm font-medium text-zinc-700">${label}</label>` : ''}
+      <input
+        ${inputAttrs}
+        className="${buildInputClasses()}"
+      />
+    </div>
+  );
+}`;
+    };
+
     const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
@@ -208,7 +265,7 @@ ${hasAnimation ? `
     return (
         <div className="flex flex-col md:flex-row">
             {/* Parameters Side */}
-            <div className="w-full md:w-1/4 p-8 bg-white shadow-md overflow-y-auto max-h-[95vh]">
+            <div className="w-full md:w-1/4 p-8 bg-white border-r border-zinc-200 overflow-y-auto max-h-[95vh]">
                 <h2 className="text-2xl font-bold mb-6">Input Parameters</h2>
                 <div className="space-y-4">
                     {/* Basic Input Properties */}
@@ -217,7 +274,7 @@ ${hasAnimation ? `
                         <select
                             value={inputType}
                             onChange={(e) => setInputType(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="text">Text</option>
                             <option value="password">Password</option>
@@ -242,7 +299,7 @@ ${hasAnimation ? `
                             type="text"
                             value={placeholder}
                             onChange={(e) => setPlaceholder(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -251,7 +308,7 @@ ${hasAnimation ? `
                             type="text"
                             value={label}
                             onChange={(e) => setLabel(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -260,7 +317,7 @@ ${hasAnimation ? `
                             type="text"
                             value={defaultValue}
                             onChange={(e) => setDefaultValue(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -269,7 +326,7 @@ ${hasAnimation ? `
                                 type="checkbox"
                                 checked={isRequired}
                                 onChange={(e) => setIsRequired(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Required</span>
                         </label>
@@ -282,7 +339,7 @@ ${hasAnimation ? `
                             type="number"
                             value={width}
                             onChange={(e) => setWidth(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -291,7 +348,7 @@ ${hasAnimation ? `
                             type="number"
                             value={height}
                             onChange={(e) => setHeight(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -300,7 +357,7 @@ ${hasAnimation ? `
                             type="number"
                             value={borderRadius}
                             onChange={(e) => setBorderRadius(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -309,7 +366,7 @@ ${hasAnimation ? `
                             type="number"
                             value={borderWidth}
                             onChange={(e) => setBorderWidth(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -318,7 +375,7 @@ ${hasAnimation ? `
                             type="color"
                             value={borderColor}
                             onChange={(e) => setBorderColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -326,7 +383,7 @@ ${hasAnimation ? `
                         <select
                             value={borderStyle}
                             onChange={(e) => setBorderStyle(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="solid">Solid</option>
                             <option value="dashed">Dashed</option>
@@ -340,7 +397,7 @@ ${hasAnimation ? `
                             type="color"
                             value={backgroundColor}
                             onChange={(e) => setBackgroundColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -349,7 +406,7 @@ ${hasAnimation ? `
                             type="color"
                             value={textColor}
                             onChange={(e) => setTextColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -358,7 +415,7 @@ ${hasAnimation ? `
                             type="number"
                             value={fontSize}
                             onChange={(e) => setFontSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -367,7 +424,7 @@ ${hasAnimation ? `
                             type="number"
                             value={padding}
                             onChange={(e) => setPadding(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     {/* Focus State */}
@@ -377,7 +434,7 @@ ${hasAnimation ? `
                             type="color"
                             value={focusBorderColor}
                             onChange={(e) => setFocusBorderColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -386,7 +443,7 @@ ${hasAnimation ? `
                             type="color"
                             value={focusBackgroundColor}
                             onChange={(e) => setFocusBackgroundColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -395,7 +452,7 @@ ${hasAnimation ? `
                             type="color"
                             value={focusTextColor}
                             onChange={(e) => setFocusTextColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -406,7 +463,7 @@ ${hasAnimation ? `
                             type="color"
                             value={hoverBorderColor}
                             onChange={(e) => setHoverBorderColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -415,7 +472,7 @@ ${hasAnimation ? `
                             type="color"
                             value={hoverBackgroundColor}
                             onChange={(e) => setHoverBackgroundColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -426,7 +483,7 @@ ${hasAnimation ? `
                                 type="checkbox"
                                 checked={isErrorState}
                                 onChange={(e) => setIsErrorState(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Show Error State</span>
                         </label>
@@ -438,7 +495,7 @@ ${hasAnimation ? `
                             type="color"
                             value={errorBorderColor}
                             onChange={(e) => setErrorBorderColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -447,7 +504,7 @@ ${hasAnimation ? `
                             type="color"
                             value={errorBackgroundColor}
                             onChange={(e) => setErrorBackgroundColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -456,7 +513,7 @@ ${hasAnimation ? `
                             type="color"
                             value={errorTextColor}
                             onChange={(e) => setErrorTextColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -467,7 +524,7 @@ ${hasAnimation ? `
                             type="number"
                             value={minLength}
                             onChange={(e) => setMinLength(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -476,7 +533,7 @@ ${hasAnimation ? `
                             type="number"
                             value={maxLength}
                             onChange={(e) => setMaxLength(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -484,7 +541,7 @@ ${hasAnimation ? `
                         <select
                             value={patternPreset}
                             onChange={(e) => setPatternPreset(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             {Object.entries(patternPresets).map(([key, { label }]) => (
                                 <option key={key} value={key}>{label}</option>
@@ -500,7 +557,7 @@ ${hasAnimation ? `
                                 setPattern(e.target.value);
                                 setPatternPreset('custom');
                             }}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -511,7 +568,7 @@ ${hasAnimation ? `
                             type="text"
                             value={ariaLabel}
                             onChange={(e) => setAriaLabel(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -520,7 +577,7 @@ ${hasAnimation ? `
                             type="text"
                             value={ariaDescribedBy}
                             onChange={(e) => setAriaDescribedBy(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -531,7 +588,7 @@ ${hasAnimation ? `
                                 type="checkbox"
                                 checked={isAutofocus}
                                 onChange={(e) => setIsAutofocus(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Autofocus</span>
                         </label>
@@ -542,7 +599,7 @@ ${hasAnimation ? `
                                 type="checkbox"
                                 checked={isReadOnly}
                                 onChange={(e) => setIsReadOnly(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Read Only</span>
                         </label>
@@ -553,7 +610,7 @@ ${hasAnimation ? `
                                 type="checkbox"
                                 checked={isDisabled}
                                 onChange={(e) => setIsDisabled(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Disabled</span>
                         </label>
@@ -566,7 +623,7 @@ ${hasAnimation ? `
                                 type="checkbox"
                                 checked={hasIcon}
                                 onChange={(e) => setHasIcon(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Has Icon</span>
                         </label>
@@ -577,7 +634,7 @@ ${hasAnimation ? `
                             <select
                                 value={iconPosition}
                                 onChange={(e) => setIconPosition(e.target.value)}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             >
                                 <option value="left">Left</option>
                                 <option value="right">Right</option>
@@ -592,7 +649,7 @@ ${hasAnimation ? `
                                 type="checkbox"
                                 checked={hasAnimation}
                                 onChange={(e) => setHasAnimation(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Has Animation</span>
                         </label>
@@ -603,7 +660,7 @@ ${hasAnimation ? `
                             <select
                                 value={animationType}
                                 onChange={(e) => setAnimationType(e.target.value)}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             >
                                 <option value="fadeIn">Fade In</option>
                                 <option value="slideIn">Slide In</option>
@@ -615,7 +672,7 @@ ${hasAnimation ? `
             </div>
 
             {/* Preview and Code Side */}
-            <div className="w-full md:w-3/4 p-8 bg-gray-50">
+            <div className="w-full md:w-3/4 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
 
                 <div className="border p-4 bg-white min-h-[200px]" style={{ width: viewportWidth, margin: '0 auto' }}>
@@ -623,33 +680,14 @@ ${hasAnimation ? `
                     <div dangerouslySetInnerHTML={{ __html: generateHTML() }} />
                 </div>
 
-                {/* Generated Code */}
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind HTML', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div>
     );

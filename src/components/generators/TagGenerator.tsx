@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type="text"
                         value={placeholder}
                         onChange={(e) => setPlaceholder(e.target.value)}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                     />
                 </div>
 
@@ -193,7 +193,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type="number"
                         value={maxTags}
                         onChange={(e) => setMaxTags(parseInt(e.target.value))}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                     />
                 </div>
 
@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type="color"
                         value={styles.backgroundColor}
                         onChange={(e) => setStyles({ ...styles, backgroundColor: e.target.value })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                     />
                 </div>
 
@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type="color"
                         value={styles.textColor}
                         onChange={(e) => setStyles({ ...styles, textColor: e.target.value })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                     />
                 </div>
 
@@ -223,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type="color"
                         value={styles.tagBackgroundColor}
                         onChange={(e) => setStyles({ ...styles, tagBackgroundColor: e.target.value })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                     />
                 </div>
 
@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type="color"
                         value={styles.tagTextColor}
                         onChange={(e) => setStyles({ ...styles, tagTextColor: e.target.value })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                     />
                 </div>
 
@@ -243,7 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type="color"
                         value={styles.borderColor}
                         onChange={(e) => setStyles({ ...styles, borderColor: e.target.value })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                     />
                 </div>
 
@@ -253,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type="number"
                         value={styles.borderRadius}
                         onChange={(e) => setStyles({ ...styles, borderRadius: parseInt(e.target.value) })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                     />
                 </div>
 
@@ -263,7 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         type="number"
                         value={styles.fontSize}
                         onChange={(e) => setStyles({ ...styles, fontSize: parseInt(e.target.value) })}
-                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                     />
                 </div>
             </div>
@@ -343,7 +343,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <h3 className="text-xl font-semibold">HTML</h3>
                         <button
                             onClick={() => copyToClipboard(generateHTML(), setCopiedHTML)}
-                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+                            className="px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-700 transition-colors"
                         >
                             <FontAwesomeIcon icon={copiedHTML ? faCheck : faCopy} className="mr-2" />
                             {copiedHTML ? 'Copied!' : 'Copy HTML'}
@@ -359,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <h3 className="text-xl font-semibold">CSS</h3>
                         <button
                             onClick={() => copyToClipboard(generateCSS(), setCopiedCSS)}
-                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+                            className="px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-700 transition-colors"
                         >
                             <FontAwesomeIcon icon={copiedCSS ? faCheck : faCopy} className="mr-2" />
                             {copiedCSS ? 'Copied!' : 'Copy CSS'}
@@ -375,7 +375,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <h3 className="text-xl font-semibold">JavaScript</h3>
                         <button
                             onClick={() => copyToClipboard(generateJS(), setCopiedJS)}
-                            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+                            className="px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-700 transition-colors"
                         >
                             <FontAwesomeIcon icon={copiedJS ? faCheck : faCopy} className="mr-2" />
                             {copiedJS ? 'Copied!' : 'Copy JavaScript'}

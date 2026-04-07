@@ -13,42 +13,69 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-    const toggleMenu = () => {
-        setIsMenuOpen(!isMenuOpen);
-    };
     return (
-        <div className="bg-gray-100 min-h-screen flex flex-col">
+        <div className="bg-zinc-50 min-h-screen flex flex-col">
             <Head>
                 <title>UI Artisan</title>
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <header className="bg-gradient-to-r from-blue-600 to-blue-800 text-white">
-                <nav className="container mx-auto px-6 py-3">
+            <header className="sticky top-0 z-50 bg-zinc-950 border-b border-zinc-800">
+                <nav className="mx-auto max-w-7xl px-6 py-4">
                     <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <Link href="/" className="text-2xl font-bold">
-                                UI Artisan
+                        <Link href="/" className="flex items-center gap-2.5">
+                            <span className="flex h-7 w-7 items-center justify-center rounded bg-emerald-500 text-xs font-bold text-zinc-950 select-none">
+                                UI
+                            </span>
+                            <span className="text-lg font-semibold text-white tracking-tight">
+                                Artisan
+                            </span>
+                        </Link>
+
+                        <div className="hidden md:flex items-center gap-8">
+                            <Link href="/" className="text-sm text-zinc-400 hover:text-white transition-colors">
+                                Home
+                            </Link>
+                            <Link href="/#components" className="text-sm text-zinc-400 hover:text-white transition-colors">
+                                Components
+                            </Link>
+                            <Link href="/#contact" className="text-sm text-zinc-400 hover:text-white transition-colors">
+                                Contact
                             </Link>
                         </div>
-                        <div className="hidden md:flex items-center space-x-8">
-                            <Link href="/" className="hover:text-blue-200 transition duration-300">Home</Link>
-                            <Link href="/#components" className="hover:text-blue-200 transition duration-300">Components</Link>
-                            <Link href="/#contact" className="hover:text-blue-200 transition duration-300">Contact</Link>
-                        </div>
-                        <div className="md:hidden">
-                            <button className="text-white focus:outline-none" onClick={toggleMenu}>
-                                <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
-                            </button>
-                        </div>
+
+                        <button
+                            className="md:hidden text-zinc-400 hover:text-white focus:outline-none transition-colors"
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            aria-label="Toggle menu"
+                        >
+                            <FontAwesomeIcon icon={isMenuOpen ? faTimes : faBars} />
+                        </button>
                     </div>
+
                     {isMenuOpen && (
-                        <div className="md:hidden">
-                            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                                <Link href="/" className="block hover:text-blue-200 transition duration-300 py-2">Home</Link>
-                                <Link href="#components" className="block hover:text-blue-200 transition duration-300 py-2">Components</Link>
-                                <Link href="#contact" className="block hover:text-blue-200 transition duration-300 py-2">Contact</Link>
-                            </div>
+                        <div className="md:hidden border-t border-zinc-800 mt-4 pt-4 pb-2 space-y-1">
+                            <Link
+                                href="/"
+                                className="block text-sm text-zinc-400 hover:text-white py-2 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Home
+                            </Link>
+                            <Link
+                                href="/#components"
+                                className="block text-sm text-zinc-400 hover:text-white py-2 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Components
+                            </Link>
+                            <Link
+                                href="/#contact"
+                                className="block text-sm text-zinc-400 hover:text-white py-2 transition-colors"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                Contact
+                            </Link>
                         </div>
                     )}
                 </nav>
@@ -62,5 +89,3 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
 };
 
 export default Layout;
-
-

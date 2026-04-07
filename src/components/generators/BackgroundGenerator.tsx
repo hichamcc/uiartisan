@@ -53,7 +53,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6">Background Generator</h2>
 
                 <div className="space-y-4">
@@ -63,7 +63,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
                             type="color"
                             value={backgroundColor}
                             onChange={(e) => setBackgroundColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -72,7 +72,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
                         <select
                             value={gradientType}
                             onChange={(e) => setGradientType(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="linear">Linear</option>
                             <option value="radial">Radial</option>
@@ -86,7 +86,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
                                 type="number"
                                 value={gradientAngle}
                                 onChange={(e) => setGradientAngle(Number(e.target.value))}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                         </div>
                     )}
@@ -99,7 +99,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
                                     type="color"
                                     value={stop.color}
                                     onChange={(e) => updateColorStop(index, 'color', e.target.value)}
-                                    className="w-10 h-10 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="w-10 h-10 rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                                 <input
                                     type="number"
@@ -107,7 +107,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
                                     onChange={(e) => updateColorStop(index, 'position', Number(e.target.value))}
                                     min="0"
                                     max="100"
-                                    className="w-16 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="w-16 rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                                 {colorStops.length > 2 && (
                                     <button onClick={() => removeColorStop(index)} className="text-red-500">
@@ -117,7 +117,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
                             </div>
                         ))}
                         {colorStops.length < 5 && (
-                            <button onClick={addColorStop} className="mt-2 text-blue-500">
+                            <button onClick={addColorStop} className="mt-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faPlus} className="mr-2" />
                                 Add Color Stop
                             </button>
@@ -126,7 +126,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white overflow-hidden relative">
                     <div
@@ -145,7 +145,7 @@ background-image: radial-gradient(circle, ${stopsString});`;
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateCSS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>

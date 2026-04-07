@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from 'react';
+import { CodePanel, toTw } from './CodePanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 const RadioGenerator = () => {
     const [radioStyle, setRadioStyle] = useState('traditional');
@@ -151,6 +149,16 @@ const RadioGenerator = () => {
         }
     };
 
+    const generateTailwind = () => {
+        const opts = options.map((opt, i) =>
+            `  <label class="flex items-center gap-2 cursor-pointer">\n    <div class="relative flex items-center justify-center">\n      <input type="radio" name="${groupName}" class="sr-only peer" ${i === selectedOption ? 'checked' : ''}/>\n      <div class="w-[${size}px] h-[${size}px] rounded-full border-[${borderWidth}px] border-[${borderColor}] bg-[${backgroundColor}] peer-checked:border-[${checkedColor}] transition-all"></div>\n      <div class="absolute w-[${Math.round(size * 0.4)}px] h-[${Math.round(size * 0.4)}px] rounded-full bg-[${checkedColor}] scale-0 peer-checked:scale-100 transition-transform"></div>\n    </div>\n    <span class="text-[${fontSize}px] text-[${labelColor}]">${opt}</span>\n  </label>`
+        ).join('\n');
+        return `<div class="${layout === 'vertical' ? 'flex flex-col' : 'flex flex-row flex-wrap'} gap-[${spacing}px]">\n${opts}\n</div>`;
+    };
+
+    const generateReact = () =>
+        `import { useState } from 'react';\n\nconst options = ${JSON.stringify(options)};\n\nexport function RadioGroup() {\n  const [selected, setSelected] = useState(${selectedOption});\n  return (\n    <div className="${layout === 'vertical' ? 'flex flex-col' : 'flex flex-row flex-wrap'} gap-[${spacing}px]">\n      {options.map((opt, i) => (\n        <label key={i} className="flex items-center gap-2 cursor-pointer">\n          <div className="relative flex items-center justify-center">\n            <input type="radio" name="${groupName}" checked={selected === i} onChange={() => setSelected(i)} className="sr-only peer" />\n            <div className="w-[${size}px] h-[${size}px] rounded-full border-[${borderWidth}px] border-[${borderColor}] bg-[${backgroundColor}] peer-checked:border-[${checkedColor}] transition-all" />\n            <div className="absolute w-[${Math.round(size * 0.4)}px] h-[${Math.round(size * 0.4)}px] rounded-full bg-[${checkedColor}] scale-0 peer-checked:scale-100 transition-transform" />\n          </div>\n          <span className="text-[${fontSize}px] text-[${labelColor}]">{opt}</span>\n        </label>\n      ))}\n    </div>\n  );\n}`;
+
     const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
@@ -176,7 +184,7 @@ const RadioGenerator = () => {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto max-h-[95vh]">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto max-h-[95vh]">
                 <h2 className="text-2xl font-bold mb-6">Radio Button Generator</h2>
 
                 <div className="space-y-4">
@@ -185,7 +193,7 @@ const RadioGenerator = () => {
                         <select
                             value={radioStyle}
                             onChange={(e) => setRadioStyle(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="traditional">Traditional</option>
                             <option value="modern">Modern (Button-like)</option>
@@ -197,7 +205,7 @@ const RadioGenerator = () => {
                             type="text"
                             value={groupName}
                             onChange={(e) => setGroupName(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -208,7 +216,7 @@ const RadioGenerator = () => {
                                     type="text"
                                     value={option}
                                     onChange={(e) => handleOptionChange(index, e.target.value)}
-                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                                 <button
                                     onClick={() => removeOption(index)}
@@ -230,7 +238,7 @@ const RadioGenerator = () => {
                         <select
                             value={selectedOption}
                             onChange={(e) => setSelectedOption(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             {options.map((_, index) => (
                                 <option key={index} value={index}>Option {index + 1}</option>
@@ -243,7 +251,7 @@ const RadioGenerator = () => {
                             type="number"
                             value={size}
                             onChange={(e) => setSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -252,7 +260,7 @@ const RadioGenerator = () => {
                             type="number"
                             value={borderWidth}
                             onChange={(e) => setBorderWidth(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -261,7 +269,7 @@ const RadioGenerator = () => {
                             type="number"
                             value={borderRadius}
                             onChange={(e) => setBorderRadius(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -270,7 +278,7 @@ const RadioGenerator = () => {
                             type="color"
                             value={borderColor}
                             onChange={(e) => setBorderColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -279,7 +287,7 @@ const RadioGenerator = () => {
                             type="color"
                             value={backgroundColor}
                             onChange={(e) => setBackgroundColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -288,7 +296,7 @@ const RadioGenerator = () => {
                             type="color"
                             value={checkedColor}
                             onChange={(e) => setCheckedColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -297,7 +305,7 @@ const RadioGenerator = () => {
                             type="color"
                             value={labelColor}
                             onChange={(e) => setLabelColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -306,7 +314,7 @@ const RadioGenerator = () => {
                             type="number"
                             value={fontSize}
                             onChange={(e) => setFontSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -315,7 +323,7 @@ const RadioGenerator = () => {
                             type="number"
                             value={spacing}
                             onChange={(e) => setSpacing(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -325,7 +333,7 @@ const RadioGenerator = () => {
                             step="0.1"
                             value={animationDuration}
                             onChange={(e) => setAnimationDuration(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -333,7 +341,7 @@ const RadioGenerator = () => {
                         <select
                             value={layout}
                             onChange={(e) => setLayout(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="vertical">Vertical</option>
                             <option value="horizontal">Horizontal</option>
@@ -342,38 +350,20 @@ const RadioGenerator = () => {
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white min-h-[200px] flex items-center justify-center">
                     <style>{generateCSS()}</style>
                     <div dangerouslySetInnerHTML={{ __html: generateHTML() }} />
                 </div>
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div>
     );

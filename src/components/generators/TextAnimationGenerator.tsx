@@ -145,7 +145,7 @@ const TextAnimationGenerator = () => {
 
   return (
     <div className="flex flex-col md:flex-row">
-      <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+      <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
         <h2 className="text-2xl font-bold mb-6">Text Animation Generator</h2>
 
         <div className="space-y-4">
@@ -155,7 +155,7 @@ const TextAnimationGenerator = () => {
               type="text"
               value={text}
               onChange={(e) => setText(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             />
           </div>
 
@@ -164,7 +164,7 @@ const TextAnimationGenerator = () => {
             <select
               value={animationType}
               onChange={(e: any) => setAnimationType(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             >
               <option value="fade-in">Fade In</option>
               <option value="slide-in">Slide In</option>
@@ -184,7 +184,7 @@ const TextAnimationGenerator = () => {
               onChange={(e) => setDuration(Number(e.target.value))}
               min="0.1"
               step="0.1"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             />
           </div>
 
@@ -196,7 +196,7 @@ const TextAnimationGenerator = () => {
               onChange={(e) => setDelay(Number(e.target.value))}
               min="0"
               step="0.1"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             />
           </div>
 
@@ -205,7 +205,7 @@ const TextAnimationGenerator = () => {
             <select
               value={iterationCount}
               onChange={(e: any) => setIterationCount(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             >
               <option value="1">1</option>
               <option value="2">2</option>
@@ -221,7 +221,7 @@ const TextAnimationGenerator = () => {
               value={fontSize}
               onChange={(e) => setFontSize(Number(e.target.value))}
               min="8"
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             />
           </div>
 
@@ -231,13 +231,13 @@ const TextAnimationGenerator = () => {
               type="color"
               value={fontColor}
               onChange={(e) => setFontColor(e.target.value)}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
             />
           </div>
         </div>
       </div>
 
-      <div className="w-full md:w-2/3 p-8 bg-gray-50">
+      <div className="w-full md:w-2/3 p-8 bg-zinc-50">
         <h2 className="text-2xl font-bold mb-4">Preview</h2>
         <div className="border p-4 bg-white overflow-hidden relative" style={{ height: '200px' }}>
           <div className={`animated-text ${animationType === 'write' || animationType === 'drop' || animationType === 'letter-rotate' ? '' : 'animated'}`} style={{
@@ -257,7 +257,7 @@ const TextAnimationGenerator = () => {
           <div>
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-xl font-semibold">Generated CSS</h2>
-              <button onClick={() => handleCopyCode(css)} className="text-blue-600 hover:text-blue-800">
+              <button onClick={() => handleCopyCode(css)} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                 Copy
               </button>
@@ -270,7 +270,7 @@ const TextAnimationGenerator = () => {
           <div>
             <div className="flex justify-between items-center mb-2">
               <h2 className="text-xl font-semibold">Generated HTML</h2>
-              <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+              <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                 Copy
               </button>

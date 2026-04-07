@@ -128,7 +128,7 @@ gsap.to("${selector}", {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto max-h-[95vh]">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto max-h-[95vh]">
                 <h2 className="text-2xl font-bold mb-6">GSAP Animation Generator</h2>
 
                 <div className="space-y-4">
@@ -137,7 +137,7 @@ gsap.to("${selector}", {
                         <textarea
                             value={htmlCode}
                             onChange={(e) => setHtmlCode(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             rows={5}
                         />
                     </div>
@@ -148,7 +148,7 @@ gsap.to("${selector}", {
                             type="text"
                             value={selector}
                             onChange={(e) => setSelector(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -161,7 +161,7 @@ gsap.to("${selector}", {
                                 <select
                                     value={value as string}
                                     onChange={(e) => handleInputChange(prop as keyof AnimationProps, e.target.value)}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 >
                                     {easeOptions.map(option => (
                                         <option key={option} value={option}>{option}</option>
@@ -173,7 +173,7 @@ gsap.to("${selector}", {
                                     value={value as number}
                                     onChange={(e) => handleInputChange(prop as keyof AnimationProps, Number(e.target.value))}
                                     step={prop === 'duration' || prop === 'scale' ? 0.1 : 1}
-                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                             )}
                         </div>
@@ -183,7 +183,7 @@ gsap.to("${selector}", {
                 <div className="mt-6">
                     <button
                         onClick={playAnimation}
-                        className="w-full px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition duration-300"
+                        className="w-full px-4 py-2 bg-zinc-900 text-white rounded hover:bg-zinc-700 transition-colors"
                     >
                         <FontAwesomeIcon icon={faPlay} className="mr-2" />
                         Play Animation
@@ -200,7 +200,7 @@ gsap.to("${selector}", {
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white overflow-hidden h-64 relative">
                     <div ref={previewRef}></div>
@@ -209,7 +209,7 @@ gsap.to("${selector}", {
                 <div className="mt-8">
                     <div className="flex justify-between items-center mb-2">
                         <h2 className="text-xl font-semibold">Generated GSAP Code</h2>
-                        <button onClick={copyCode} className="text-blue-600 hover:text-blue-800">
+                        <button onClick={copyCode} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                             <FontAwesomeIcon icon={faCopy} className="mr-2" />
                             Copy
                         </button>

@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from 'react';
+import { CodePanel, toTw } from './CodePanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy, faInfoCircle, faCheckCircle, faExclamationTriangle, faTimesCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { faInfoCircle, faCheckCircle, faExclamationTriangle, faTimesCircle, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 interface AlertStyle {
     type: 'info' | 'success' | 'warning' | 'error';
@@ -148,6 +147,23 @@ function closeAlert(button) {
 `;
     };
 
+    const generateTailwind = () => {
+        const [vPos, hPos] = alertStyle.position.split('-');
+        return `<div class="fixed ${vPos === 'top' ? 'top-5' : 'bottom-5'} ${hPos === 'right' ? 'right-5' : 'left-5'} z-[1000]">
+  <div class="flex items-start gap-3 w-[${alertStyle.width}px] bg-[${alertStyle.backgroundColor}] border border-[${alertStyle.borderColor}] text-[${alertStyle.textColor}] rounded-[${alertStyle.borderRadius}px] p-[${alertStyle.padding}px] text-[${alertStyle.fontSize}px]">
+    <span class="text-xl text-[${alertStyle.iconColor}]">ℹ</span>
+    <div class="flex-1">
+      <div class="font-bold">${alertStyle.title}</div>
+      <div>${alertStyle.message}</div>
+    </div>
+    <button class="opacity-70 hover:opacity-100 transition-opacity">✕</button>
+  </div>
+</div>`;
+    };
+
+    const generateReact = () =>
+        `import { useState } from 'react';\n\nexport function Alert() {\n  const [show, setShow] = useState(true);\n  if (!show) return null;\n  return (\n    <div className="fixed ${alertStyle.position.split('-')[0] === 'top' ? 'top-5' : 'bottom-5'} ${alertStyle.position.split('-')[1] === 'right' ? 'right-5' : 'left-5'} z-[1000]">\n      <div className="flex items-start gap-3 w-[${alertStyle.width}px] bg-[${alertStyle.backgroundColor}] border border-[${alertStyle.borderColor}] text-[${alertStyle.textColor}] rounded-[${alertStyle.borderRadius}px] p-[${alertStyle.padding}px] text-[${alertStyle.fontSize}px]">\n        <span className="text-xl text-[${alertStyle.iconColor}]">ℹ</span>\n        <div className="flex-1">\n          <div className="font-bold">${alertStyle.title}</div>\n          <div>${alertStyle.message}</div>\n        </div>\n        <button onClick={() => setShow(false)} className="opacity-70 hover:opacity-100 transition-opacity">✕</button>\n      </div>\n    </div>\n  );\n}`;
+
     const handleCopyCode = (code: string) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
@@ -165,7 +181,7 @@ function closeAlert(button) {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6">Alert Notification Generator</h2>
 
                 <div className="space-y-4">
@@ -174,7 +190,7 @@ function closeAlert(button) {
                         <select
                             value={alertStyle.type}
                             onChange={(e) => updateStyle('type', e.target.value as AlertStyle['type'])}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="info">Info</option>
                             <option value="success">Success</option>
@@ -188,7 +204,7 @@ function closeAlert(button) {
                         <select
                             value={alertStyle.position}
                             onChange={(e) => updateStyle('position', e.target.value as AlertStyle['position'])}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="top-right">Top Right</option>
                             <option value="top-left">Top Left</option>
@@ -203,7 +219,7 @@ function closeAlert(button) {
                             type="text"
                             value={alertStyle.title}
                             onChange={(e) => updateStyle('title', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -212,7 +228,7 @@ function closeAlert(button) {
                         <textarea
                             value={alertStyle.message}
                             onChange={(e) => updateStyle('message', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             rows={3}
                         />
                     </div>
@@ -223,7 +239,7 @@ function closeAlert(button) {
                             type="color"
                             value={alertStyle.backgroundColor}
                             onChange={(e) => updateStyle('backgroundColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -233,7 +249,7 @@ function closeAlert(button) {
                             type="color"
                             value={alertStyle.textColor}
                             onChange={(e) => updateStyle('textColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -243,7 +259,7 @@ function closeAlert(button) {
                             type="color"
                             value={alertStyle.borderColor}
                             onChange={(e) => updateStyle('borderColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -253,7 +269,7 @@ function closeAlert(button) {
                             type="color"
                             value={alertStyle.iconColor}
                             onChange={(e) => updateStyle('iconColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -263,7 +279,7 @@ function closeAlert(button) {
                             type="number"
                             value={alertStyle.fontSize}
                             onChange={(e) => updateStyle('fontSize', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -273,7 +289,7 @@ function closeAlert(button) {
                             type="number"
                             value={alertStyle.padding}
                             onChange={(e) => updateStyle('padding', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -283,7 +299,7 @@ function closeAlert(button) {
                             type="number"
                             value={alertStyle.borderRadius}
                             onChange={(e) => updateStyle('borderRadius', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -293,7 +309,7 @@ function closeAlert(button) {
                             type="number"
                             value={alertStyle.width}
                             onChange={(e) => updateStyle('width', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -304,13 +320,13 @@ function closeAlert(button) {
                             step="0.1"
                             value={alertStyle.animationDuration}
                             onChange={(e) => updateStyle('animationDuration', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-8 bg-white overflow-hidden relative" style={{ height: '400px' }}>
                     <style>{generateCSS()}</style>
@@ -332,32 +348,14 @@ function closeAlert(button) {
                     )}
                 </div>
 
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div>
     );

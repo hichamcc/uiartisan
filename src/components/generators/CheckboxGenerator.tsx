@@ -1,9 +1,7 @@
 "use client";
 import React, { useState } from 'react';
+import { CodePanel, toTw } from './CodePanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 const CheckboxGenerator = () => {
     const [checkboxType, setCheckboxType] = useState('traditional');
@@ -137,6 +135,19 @@ const CheckboxGenerator = () => {
         }
     };
 
+    const generateTailwind = () =>
+        `<label class="flex items-center gap-2 cursor-pointer select-none text-[${fontSize}px] text-[${labelColor}]">
+  <div class="relative flex items-center justify-center">
+    <input type="checkbox" class="sr-only peer" />
+    <div class="w-[${size}px] h-[${size}px] rounded-[${borderRadius}px] border-[${borderWidth}px] border-[${borderColor}] bg-[${backgroundColor}] peer-checked:bg-[${checkedColor}] peer-checked:border-[${checkedColor}] transition-all duration-[${Math.round(animationDuration * 1000)}ms]"></div>
+    <svg class="absolute w-3 h-3 text-[${checkColor}] opacity-0 peer-checked:opacity-100 transition-opacity" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
+  </div>
+  ${label}
+</label>`;
+
+    const generateReact = () =>
+        `import { useState } from 'react';\n\nexport function CustomCheckbox() {\n  const [checked, setChecked] = useState(false);\n  return (\n    <label className="flex items-center gap-2 cursor-pointer select-none text-[${fontSize}px] text-[${labelColor}]">\n      <div className="relative flex items-center justify-center">\n        <input type="checkbox" checked={checked} onChange={() => setChecked(!checked)} className="sr-only peer" />\n        <div className="w-[${size}px] h-[${size}px] rounded-[${borderRadius}px] border-[${borderWidth}px] border-[${borderColor}] bg-[${backgroundColor}] peer-checked:bg-[${checkedColor}] peer-checked:border-[${checkedColor}] transition-all duration-[${Math.round(animationDuration * 1000)}ms]" />\n        <svg className="absolute w-3 h-3 text-[${checkColor}] opacity-0 peer-checked:opacity-100 transition-opacity" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>\n      </div>\n      ${label}\n    </label>\n  );\n}`;
+
     const handleCopyCode = (code: any) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
@@ -144,7 +155,7 @@ const CheckboxGenerator = () => {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto max-h-[95vh]">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto max-h-[95vh]">
                 <h2 className="text-2xl font-bold mb-6">Checkbox Generator</h2>
 
                 <div className="space-y-4">
@@ -153,7 +164,7 @@ const CheckboxGenerator = () => {
                         <select
                             value={checkboxType}
                             onChange={(e) => setCheckboxType(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="traditional">Traditional</option>
                             <option value="button">Button</option>
@@ -165,7 +176,7 @@ const CheckboxGenerator = () => {
                             type="text"
                             value={label}
                             onChange={(e) => setLabel(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -174,7 +185,7 @@ const CheckboxGenerator = () => {
                                 type="checkbox"
                                 checked={checked}
                                 onChange={(e) => setChecked(e.target.checked)}
-                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                             <span className="ml-2 text-sm text-gray-700">Checked by default</span>
                         </label>
@@ -185,7 +196,7 @@ const CheckboxGenerator = () => {
                             type="number"
                             value={size}
                             onChange={(e) => setSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -194,7 +205,7 @@ const CheckboxGenerator = () => {
                             type="number"
                             value={borderWidth}
                             onChange={(e) => setBorderWidth(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -203,7 +214,7 @@ const CheckboxGenerator = () => {
                             type="number"
                             value={checkboxType === 'traditional' ? borderRadius : buttonBorderRadius}
                             onChange={(e) => checkboxType === 'traditional' ? setBorderRadius(Number(e.target.value)) : setButtonBorderRadius(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -212,7 +223,7 @@ const CheckboxGenerator = () => {
                             type="color"
                             value={borderColor}
                             onChange={(e) => setBorderColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -221,7 +232,7 @@ const CheckboxGenerator = () => {
                             type="color"
                             value={backgroundColor}
                             onChange={(e) => setBackgroundColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -230,7 +241,7 @@ const CheckboxGenerator = () => {
                             type="color"
                             value={checkedColor}
                             onChange={(e) => setCheckedColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     {checkboxType === 'traditional' && (
@@ -240,7 +251,7 @@ const CheckboxGenerator = () => {
                                 type="color"
                                 value={checkColor}
                                 onChange={(e) => setCheckColor(e.target.value)}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                         </div>
                     )}
@@ -250,7 +261,7 @@ const CheckboxGenerator = () => {
                             type="color"
                             value={labelColor}
                             onChange={(e) => setLabelColor(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -259,7 +270,7 @@ const CheckboxGenerator = () => {
                             type="number"
                             value={fontSize}
                             onChange={(e) => setFontSize(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     <div>
@@ -269,7 +280,7 @@ const CheckboxGenerator = () => {
                             step="0.1"
                             value={animationDuration}
                             onChange={(e) => setAnimationDuration(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
                     {checkboxType === 'button' && (
@@ -279,46 +290,28 @@ const CheckboxGenerator = () => {
                                 type="number"
                                 value={buttonPadding}
                                 onChange={(e) => setButtonPadding(Number(e.target.value))}
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                             />
                         </div>
                     )}
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white min-h-[100px] flex items-center justify-center">
                     <style>{generateCSS()}</style>
                     <div dangerouslySetInnerHTML={{ __html: generateHTML() }} />
                 </div>
 
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div>
     );

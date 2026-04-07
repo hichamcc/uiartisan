@@ -120,7 +120,7 @@ const DivHoverGenerator: React.FC = () => {
                         <select
                             value={normalStyles[property]}
                             onChange={(e) => updateStyle('normal', property, e.target.value)}
-                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             {options?.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -131,7 +131,7 @@ const DivHoverGenerator: React.FC = () => {
                         <select
                             value={hoverStyles[property]}
                             onChange={(e) => updateStyle('hover', property, e.target.value)}
-                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             {options?.map((option) => (
                                 <option key={option.value} value={option.value}>
@@ -149,7 +149,7 @@ const DivHoverGenerator: React.FC = () => {
                             min={min}
                             max={max}
                             step={step}
-                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                         <input
                             type={type}
@@ -158,7 +158,7 @@ const DivHoverGenerator: React.FC = () => {
                             min={min}
                             max={max}
                             step={step}
-                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </>
                 )}
@@ -168,7 +168,7 @@ const DivHoverGenerator: React.FC = () => {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6">DIV Hover Generator</h2>
 
                 <div className="space-y-4">
@@ -189,7 +189,7 @@ const DivHoverGenerator: React.FC = () => {
                             min={0}
                             max={2}
                             step={0.1}
-                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -198,7 +198,7 @@ const DivHoverGenerator: React.FC = () => {
                         <select
                             value={transitionTiming}
                             onChange={(e) => setTransitionTiming(e.target.value)}
-                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="ease">Ease</option>
                             <option value="linear">Linear</option>
@@ -210,7 +210,7 @@ const DivHoverGenerator: React.FC = () => {
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-4 bg-white overflow-hidden relative h-64 flex items-center justify-center">
                     <style>{generateCSS()}</style>
@@ -223,7 +223,7 @@ const DivHoverGenerator: React.FC = () => {
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>
@@ -235,7 +235,7 @@ const DivHoverGenerator: React.FC = () => {
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateCSS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>

@@ -84,7 +84,7 @@ const ListGenerator: React.FC = () => {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto">
                 <h2 className="text-2xl font-bold mb-6">List Generator</h2>
 
                 <div className="space-y-4">
@@ -93,7 +93,7 @@ const ListGenerator: React.FC = () => {
                         <select
                             value={styles.listType}
                             onChange={(e) => updateStyle('listType', e.target.value as 'ul' | 'ol')}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             <option value="ul">Unordered List</option>
                             <option value="ol">Ordered List</option>
@@ -105,7 +105,7 @@ const ListGenerator: React.FC = () => {
                         <select
                             value={styles.markerType}
                             onChange={(e) => updateStyle('markerType', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         >
                             {markerTypes[styles.listType].map((type) => (
                                 <option key={type} value={type}>{type}</option>
@@ -119,7 +119,7 @@ const ListGenerator: React.FC = () => {
                             type="color"
                             value={styles.markerColor}
                             onChange={(e) => updateStyle('markerColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -129,7 +129,7 @@ const ListGenerator: React.FC = () => {
                             type="color"
                             value={styles.textColor}
                             onChange={(e) => updateStyle('textColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -139,7 +139,7 @@ const ListGenerator: React.FC = () => {
                             type="number"
                             value={styles.fontSize}
                             onChange={(e) => updateStyle('fontSize', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -150,7 +150,7 @@ const ListGenerator: React.FC = () => {
                             step="0.1"
                             value={styles.lineHeight}
                             onChange={(e) => updateStyle('lineHeight', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -161,7 +161,7 @@ const ListGenerator: React.FC = () => {
                             step="0.1"
                             value={styles.itemSpacing}
                             onChange={(e) => updateStyle('itemSpacing', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -173,14 +173,14 @@ const ListGenerator: React.FC = () => {
                                     type="text"
                                     value={item}
                                     onChange={(e) => updateListItem(index, e.target.value)}
-                                    className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                 />
                                 <button onClick={() => removeListItem(index)} className="ml-2 text-red-500">
                                     <FontAwesomeIcon icon={faTrash} />
                                 </button>
                             </div>
                         ))}
-                        <button onClick={addListItem} className="mt-2 text-blue-500">
+                        <button onClick={addListItem} className="mt-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors">
                             <FontAwesomeIcon icon={faPlus} className="mr-2" />
                             Add Item
                         </button>
@@ -188,7 +188,7 @@ const ListGenerator: React.FC = () => {
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-8 bg-white overflow-hidden">
                     <style>{generateCSS()}</style>
@@ -199,7 +199,7 @@ const ListGenerator: React.FC = () => {
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>
@@ -211,7 +211,7 @@ const ListGenerator: React.FC = () => {
                     <div>
                         <div className="flex justify-between items-center mb-2">
                             <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
+                            <button onClick={() => handleCopyCode(generateCSS())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                                 <FontAwesomeIcon icon={faCopy} className="mr-2" />
                                 Copy
                             </button>

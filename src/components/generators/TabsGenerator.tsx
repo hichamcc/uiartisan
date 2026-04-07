@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from 'react';
+import { CodePanel, toTw } from './CodePanel';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCopy, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import { faPlus, faTrash } from '@fortawesome/free-solid-svg-icons';
 
 interface TabStyles {
     backgroundColor: string;
@@ -96,6 +95,23 @@ function setActiveTab(index) {
 `;
     };
 
+    const generateTailwind = () =>
+        `<div class="flex flex-col">
+  <div class="flex overflow-x-auto">
+    ${tabs.map((tab, i) =>
+        `<button class="${i === activeTab ? `bg-[${styles.activeBackgroundColor}] text-[${styles.activeTextColor}]` : `bg-[${styles.backgroundColor}] text-[${styles.textColor}]`} text-[${styles.fontSize}px] px-[${styles.padding}px] py-[${Math.round(styles.padding / 2)}px] rounded-t-[${styles.borderRadius}px] mr-1 cursor-pointer transition-colors">${tab.title}</button>`
+    ).join('\n    ')}
+  </div>
+  <div class="bg-[${styles.backgroundColor}] p-[${styles.padding}px] rounded-b-[${styles.borderRadius}px] rounded-tr-[${styles.borderRadius}px] text-[${styles.textColor}]">
+    ${tabs[activeTab]?.content ?? ''}
+  </div>
+</div>`;
+
+    const generateReact = () => {
+        const tabsJson = JSON.stringify(tabs);
+        return `import { useState } from 'react';\n\nconst tabsData = ${tabsJson};\n\nexport function Tabs() {\n  const [active, setActive] = useState(0);\n  return (\n    <div className="flex flex-col">\n      <div className="flex overflow-x-auto">\n        {tabsData.map((tab, i) => (\n          <button\n            key={i}\n            onClick={() => setActive(i)}\n            className={\`text-[${styles.fontSize}px] px-[${styles.padding}px] py-[${Math.round(styles.padding / 2)}px] rounded-t-[${styles.borderRadius}px] mr-1 cursor-pointer transition-colors \${i === active ? 'bg-[${styles.activeBackgroundColor}] text-[${styles.activeTextColor}]' : 'bg-[${styles.backgroundColor}] text-[${styles.textColor}]'}\`}\n          >\n            {tab.title}\n          </button>\n        ))}\n      </div>\n      <div className="bg-[${styles.backgroundColor}] p-[${styles.padding}px] rounded-b-[${styles.borderRadius}px] rounded-tr-[${styles.borderRadius}px]">\n        {tabsData[active]?.content}\n      </div>\n    </div>\n  );\n}`;
+    };
+
     const handleCopyCode = (code: string) => {
         navigator.clipboard.writeText(code);
         // Optionally, add a toast notification here
@@ -128,7 +144,7 @@ function setActiveTab(index) {
 
     return (
         <div className="flex flex-col md:flex-row">
-            <div className="w-full md:w-1/3 p-8 bg-white shadow-md overflow-y-auto max-h-[95h]">
+            <div className="w-full md:w-1/3 p-8 bg-white border-r border-zinc-200 overflow-y-auto max-h-[95h]">
                 <h2 className="text-2xl font-bold mb-6">Tabs Generator</h2>
 
                 <div className="space-y-4">
@@ -138,7 +154,7 @@ function setActiveTab(index) {
                             type="color"
                             value={styles.backgroundColor}
                             onChange={(e) => updateStyle('backgroundColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -148,7 +164,7 @@ function setActiveTab(index) {
                             type="color"
                             value={styles.textColor}
                             onChange={(e) => updateStyle('textColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -158,7 +174,7 @@ function setActiveTab(index) {
                             type="color"
                             value={styles.activeBackgroundColor}
                             onChange={(e) => updateStyle('activeBackgroundColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -168,7 +184,7 @@ function setActiveTab(index) {
                             type="color"
                             value={styles.activeTextColor}
                             onChange={(e) => updateStyle('activeTextColor', e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -178,7 +194,7 @@ function setActiveTab(index) {
                             type="number"
                             value={styles.fontSize}
                             onChange={(e) => updateStyle('fontSize', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -188,7 +204,7 @@ function setActiveTab(index) {
                             type="number"
                             value={styles.padding}
                             onChange={(e) => updateStyle('padding', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -198,7 +214,7 @@ function setActiveTab(index) {
                             type="number"
                             value={styles.borderRadius}
                             onChange={(e) => updateStyle('borderRadius', Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                         />
                     </div>
 
@@ -211,7 +227,7 @@ function setActiveTab(index) {
                                         type="text"
                                         value={tab.title}
                                         onChange={(e) => updateTab(index, 'title', e.target.value)}
-                                        className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                        className="flex-grow rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                     />
                                     <button onClick={() => removeTab(index)} className="ml-2 text-red-500">
                                         <FontAwesomeIcon icon={faTrash} />
@@ -220,12 +236,12 @@ function setActiveTab(index) {
                                 <textarea
                                     value={tab.content}
                                     onChange={(e) => updateTab(index, 'content', e.target.value)}
-                                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    className="w-full rounded-md border-gray-300 shadow-sm focus:border-zinc-400 focus:ring focus:ring-zinc-200 focus:ring-opacity-50"
                                     rows={3}
                                 />
                             </div>
                         ))}
-                        <button onClick={addTab} className="mt-2 text-blue-500">
+                        <button onClick={addTab} className="mt-2 text-sm text-zinc-600 hover:text-zinc-900 transition-colors">
                             <FontAwesomeIcon icon={faPlus} className="mr-2" />
                             Add Tab
                         </button>
@@ -233,7 +249,7 @@ function setActiveTab(index) {
                 </div>
             </div>
 
-            <div className="w-full md:w-2/3 p-8 bg-gray-50">
+            <div className="w-full md:w-2/3 p-8 bg-zinc-50">
                 <h2 className="text-2xl font-bold mb-4">Preview</h2>
                 <div className="border p-8 bg-white overflow-hidden">
                     <style>{generateCSS()}</style>
@@ -255,32 +271,14 @@ function setActiveTab(index) {
                     </div>
                 </div>
 
-                <div className="mt-8 space-y-8">
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated HTML</h2>
-                            <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="html" style={vscDarkPlus} showLineNumbers>
-                            {generateHTML()}
-                        </SyntaxHighlighter>
-                    </div>
-                    <div>
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="text-xl font-semibold">Generated CSS</h2>
-                            <button onClick={() => handleCopyCode(generateCSS())} className="text-blue-600 hover:text-blue-800">
-                                <FontAwesomeIcon icon={faCopy} className="mr-2" />
-                                Copy
-                            </button>
-                        </div>
-                        <SyntaxHighlighter language="css" style={vscDarkPlus} showLineNumbers>
-                            {generateCSS()}
-                        </SyntaxHighlighter>
-                    </div>
-                </div>
+                <CodePanel
+                    tailwind={[{ title: 'Tailwind', code: generateTailwind(), language: 'html' }]}
+                    react={[{ title: 'React Component', code: generateReact(), language: 'tsx' }]}
+                    css={[
+                        { title: 'HTML', code: generateHTML(), language: 'html' },
+                        { title: 'CSS', code: generateCSS(), language: 'css' },
+                    ]}
+                />
             </div>
         </div>
     );

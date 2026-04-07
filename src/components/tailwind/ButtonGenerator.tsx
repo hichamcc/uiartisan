@@ -278,7 +278,7 @@ const TailwindButtonGenerator: React.FC = () => {
                 <div className="mt-8">
                     <div className="flex justify-between items-center mb-2">
                         <h2 className="text-xl font-semibold">Generated HTML</h2>
-                        <button onClick={() => handleCopyCode(generateHTML())} className="text-blue-600 hover:text-blue-800">
+                        <button onClick={() => handleCopyCode(generateHTML())} className="inline-flex items-center gap-1.5 text-sm text-zinc-500 hover:text-zinc-900 transition-colors">
                             <FontAwesomeIcon icon={faCopy} className="mr-2" />
                             Copy
                         </button>
